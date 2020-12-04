@@ -1,12 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppText from './app/components/AppText';
+import Counter from './app/components/Counter';
+import HeartButton from './app/components/HeartButton';
 
 export default function App() {
+	const counter = useRef(null);
 	return (
 		<View style={styles.container}>
-			<AppText>Open up App.js to start working on your ap</AppText>
+			<Counter ref={counter} />
+			<HeartButton
+				onPress={() => {
+					counter.current.addPoints(10);
+				}}
+			/>
 			<StatusBar style="auto" />
 		</View>
 	);
