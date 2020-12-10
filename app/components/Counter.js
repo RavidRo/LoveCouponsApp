@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import AppText from './AppText';
+import PropTypes from 'prop-types';
 
-const countingSpeed = 5000;
 const maxPoints = 100;
 
 const state = Object.freeze({
 	SLEEPING: 0,
 	COUNTING: 1,
 });
-
 export default class Counter extends Component {
 	constructor(props) {
 		super(props);
@@ -17,6 +16,7 @@ export default class Counter extends Component {
 			points: 0,
 			pointsDisplaying: 0,
 			state: state.SLEEPING,
+			countingSpeed: props.countingSpeed || 99999,
 		};
 	}
 
@@ -30,7 +30,7 @@ export default class Counter extends Component {
 						this.setState({
 							pointsDisplaying: this.state.pointsDisplaying + 1,
 						}),
-					100 / countingSpeed
+					100 / this.state.countingSpeed
 				);
 			} else {
 				this.setState({ state: state.SLEEPING });
@@ -65,3 +65,7 @@ export default class Counter extends Component {
 const styles = StyleSheet.create({
 	text: {},
 });
+
+Counter.propTypes = {
+	countingSpeed: PropTypes.number,
+};

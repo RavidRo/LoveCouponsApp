@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 });
 
 AppText.propTypes = {
-	children: PropTypes.string.isRequired,
+	children: PropTypes.string,
 	style: PropTypes.object,
 	weight: PropTypes.string,
 	color: PropTypes.string,
