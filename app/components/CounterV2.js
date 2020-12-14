@@ -20,14 +20,17 @@ export default class CounterV2 extends Component {
 	}
 
 	addPoints(addedPoints) {
-		this.setState({ points: this.state.points + addedPoints });
+		const newPoints = Math.min(this.state.points + addedPoints, maxPoints);
+		this.setState({
+			points: newPoints,
+		});
 		this.state.pointsAnim.addListener((progress) => {
 			this.setState({ pointsDisplaying: progress.value });
 		});
 		Animated.timing(this.state.pointsAnim, {
-			toValue: this.state.points + addedPoints,
+			toValue: newPoints,
 			duration: addedPoints * 1000 * this.state.animationDuration,
-			useNativeDriver: false,
+			useNativeDriver: true,
 		}).start();
 	}
 
@@ -35,14 +38,11 @@ export default class CounterV2 extends Component {
 		return (
 			<View>
 				<LottieView
-					progress={Math.min(
-						this.state.pointsDisplaying / maxPoints,
-						1
-					)}
+					progress={50}
 					style={
 						{
-							// width: 400,
-							// height: 400,
+							// width: 100,
+							// height: 20,
 							// backgroundColor: '#eee',
 						}
 					}
