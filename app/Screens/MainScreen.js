@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import AppPicker from './Picker/AppPicker';
-import HeartButton from './HeartButton';
-import PickerItem from './Picker/PickerItem';
-import Counter from './Counter';
-import Screen from './Screen';
+import AppPicker from '../components/Picker/AppPicker';
+import HeartButton from '../components/HeartButton';
+import PickerItem from '../components/Picker/PickerItem';
+import Screen from '../components/Screen';
+import CouponCounter from '../components/CouponCounter';
+import Timer from '../components/Timer';
 
 const items = [
 	{
@@ -29,7 +30,10 @@ export default function MainScreen() {
 	const counter = useRef(null);
 	return (
 		<Screen style={styles.container}>
-			<Counter ref={counter} style={styles.counter} />
+			<Timer style={styles.counter} />
+			<View style={styles.couponContainer}>
+				<CouponCounter ref={counter} />
+			</View>
 			<View style={styles.pickerBtnContainer}>
 				<AppPicker
 					PickerItemComponent={PickerItem}
@@ -52,9 +56,14 @@ const styles = StyleSheet.create({
 	},
 	counter: {
 		marginTop: '20%',
-		flex: 1,
+		flex: 0.25,
+	},
+	couponContainer: {
+		flex: 0.49,
 	},
 	pickerBtnContainer: {
-		marginBottom: '10%	',
+		flex: 0.06,
+		// marginTop: '30%',
+		// marginBottom: '10%',
 	},
 });

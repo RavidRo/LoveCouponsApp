@@ -1,6 +1,24 @@
 import React from 'react';
-import MainScreen from './app/components/MainScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+
+import MainScreen from './app/Screens/MainScreen';
+import CouponsScreen from './app/Screens/CouponsScreen';
+
+const drawerWidth = '80%';
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
-	return <MainScreen />;
+	return (
+		<NavigationContainer>
+			<Drawer.Navigator
+				initialRouteName="Main"
+				drawerContent={CouponsScreen}
+				drawerStyle={{ width: drawerWidth }}
+			>
+				<Drawer.Screen name="Main" component={MainScreen} />
+			</Drawer.Navigator>
+		</NavigationContainer>
+	);
 }

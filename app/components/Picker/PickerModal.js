@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Modal, FlatList } from 'react-native';
+import { Button, Modal, FlatList, View } from 'react-native';
 import PropTypes from 'prop-types';
 import Screen from '../Screen';
+import colors from '../../config/colors';
 
 export default function PickerModal({
 	visible,
@@ -12,8 +13,14 @@ export default function PickerModal({
 	onSelectItem,
 }) {
 	return (
-		<Modal visible={visible} animationType="slide">
-			<Screen>
+		<Modal visible={visible} animationType="slide" transparent>
+			<View
+				style={{
+					marginTop: '100%',
+					backgroundColor: colors.light,
+					flex: 1,
+				}}
+			>
 				<Button title="Close" onPress={onClose} />
 				<FlatList
 					data={data}
@@ -29,7 +36,7 @@ export default function PickerModal({
 						/>
 					)}
 				/>
-			</Screen>
+			</View>
 		</Modal>
 	);
 }
