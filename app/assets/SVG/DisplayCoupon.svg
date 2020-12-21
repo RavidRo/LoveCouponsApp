@@ -1,74 +1,79 @@
 <svg width="480.00000000000006" height="280" xmlns="http://www.w3.org/2000/svg">
  <g>
   <title>background</title>
-  <rect x="-1" y="-1" width="230.5727" height="135.33408" id="canvas_background" fill="none"/>
+  <rect fill="none" id="canvas_background" height="375.33512" width="642.00307" y="-1" x="-1"/>
  </g>
 
  <g>
   <title>Layer 1</title>
-  <rect fill="#eaea5b" stroke-width="1.5" x="431.5" y="16.45313" width="38" height="79" id="svg_67"/>
-  <rect fill="#eaea5b" stroke-width="1.5" x="431.5" y="180.45313" width="38" height="79" id="svg_65"/>
-  <rect fill="#eaea5b" stroke-width="1.5" x="422.5" y="166.45312" width="14" height="93" id="svg_64"/>
-  <rect fill="#eaea5b" stroke-width="1.5" x="423.5" y="16.45312" width="16" height="94" id="svg_62"/>
-  <rect fill="#eaea5b" stroke-width="1.5" x="349.5" y="15.45313" width="78" height="249.99999" id="svg_61"/>
+  <rect id="svg_41" height="18.37838" width="25.40541" y="173.21791" x="35.94595" stroke-opacity="null" stroke-width="1.5" stroke="null" fill="#ffffff"/>
+  <rect id="svg_43" height="18.37838" width="25.40541" y="88.2181" x="38.21867" stroke-opacity="null" stroke-width="1.5" stroke="null" fill="#ffffff"/>
+  <rect stroke="null" id="svg_40" height="110.27027" width="296.21622" y="77.00169" x="50.67568" stroke-opacity="null" stroke-width="1.5" fill="#ffffff"/>
+  <rect stroke="null" id="svg_39" height="77.83784" width="331.89189" y="184.02872" x="14.86486" stroke-opacity="null" stroke-width="1.5" fill="#ffffff"/>
+  <rect stroke="null" id="svg_38" height="77.83784" width="331.89189" y="18.08277" x="15.40541" stroke-opacity="null" stroke-width="1.5" fill="#ffffff"/>
+  <rect id="svg_67" height="79" width="38" y="16.45313" x="431.5" stroke-width="1.5" fill="#eaea5b"/>
+  <rect id="svg_65" height="79" width="38" y="180.45313" x="431.5" stroke-width="1.5" fill="#eaea5b"/>
+  <rect id="svg_64" height="93" width="14" y="166.45312" x="422.5" stroke-width="1.5" fill="#eaea5b"/>
+  <rect id="svg_62" height="94" width="16" y="16.45312" x="423.5" stroke-width="1.5" fill="#eaea5b"/>
+  <rect stroke="null" id="svg_61" height="249.99999" width="80" y="15.45313" x="347.5" stroke-width="1.5" fill="#eaea5b"/>
   <g id="svg_1">
    <g id="svg_2">
-    <rect stroke="#000000" fill="#000000" x="340" y="164" width="16" height="16" id="svg_3"/>
+    <rect id="svg_3" height="16" width="16" y="164" x="340" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_4">
    <g id="svg_5">
-    <rect stroke="#000000" fill="#000000" x="340" y="196" width="16" height="16" id="svg_6"/>
+    <rect id="svg_6" height="16" width="16" y="196" x="340" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_7">
    <g id="svg_8">
-    <rect stroke="#000000" fill="#000000" x="340" y="228" width="16" height="16" id="svg_9"/>
+    <rect id="svg_9" height="16" width="16" y="228" x="340" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_10">
    <g id="svg_11">
-    <rect stroke="#000000" fill="#000000" x="340" y="132" width="16" height="16" id="svg_12"/>
+    <rect id="svg_12" height="16" width="16" y="132" x="340" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_13">
    <g id="svg_14">
-    <rect stroke="#000000" fill="#000000" x="340" y="100" width="16" height="16" id="svg_15"/>
+    <rect id="svg_15" height="16" width="16" y="100" x="340" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_16">
    <g id="svg_17">
-    <rect stroke="#000000" fill="#000000" x="340" y="68" width="16" height="16" id="svg_18"/>
+    <rect id="svg_18" height="16" width="16" y="68" x="340" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_19">
    <g id="svg_20">
-    <rect stroke="#000000" fill="#000000" stroke-width="0" x="340" y="36" width="16" height="16" id="svg_21"/>
+    <rect id="svg_21" height="16" width="16" y="36" x="340" stroke-width="0" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_22">
    <g id="svg_23">
-    <rect stroke="#000000" fill="#000000" x="32" y="35" width="16" height="16" id="svg_24"/>
+    <rect id="svg_24" height="16" width="16" y="35" x="32" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_25">
    <g id="svg_26">
-    <rect stroke="#000000" fill="#000000" x="432" y="35" width="16" height="16" id="svg_27"/>
+    <rect id="svg_27" height="16" width="16" y="35" x="432" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_28">
    <g id="svg_29">
-    <rect stroke="#000000" fill="#000000" x="432" y="227" width="16" height="16" id="svg_30"/>
+    <rect id="svg_30" height="16" width="16" y="227" x="432" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_31">
    <g id="svg_32">
-    <rect stroke="#000000" fill="#000000" x="32" y="227" width="16" height="16" id="svg_33"/>
+    <rect id="svg_33" height="16" width="16" y="227" x="32" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_34">
    <g id="svg_35">
-    <path stroke="#000000" fill="#000000" d="m472,99c4.418,0 8,-3.582 8,-8l0,-80c0,-4.418 -3.582,-8 -8,-8l-464,0c-4.418,0 -8,3.582 -8,8l0,80c0,4.418 3.582,8 8,8c22.091,0 40,17.909 40,40s-17.909,40 -40,40c-4.418,0 -8,3.582 -8,8l0,80c0,4.418 3.582,8 8,8l464,0c4.418,0 8,-3.582 8,-8l0,-80c0,-4.418 -3.582,-8 -8,-8c-22.091,0 -40,-17.909 -40,-40s17.909,-40 40,-40zm-55.476,47.956c3.532,24.61 22.867,43.944 47.476,47.476l0,64.568l-448,0l0,-64.568c30.614,-4.394 51.87,-32.773 47.476,-63.388c-3.532,-24.609 -22.866,-43.944 -47.476,-47.476l0,-64.568l448,0l0,64.568c-30.614,4.394 -51.87,32.773 -47.476,63.388z" id="svg_36"/>
+    <path id="svg_36" d="m472,99c4.418,0 8,-3.582 8,-8l0,-80c0,-4.418 -3.582,-8 -8,-8l-464,0c-4.418,0 -8,3.582 -8,8l0,80c0,4.418 3.582,8 8,8c22.091,0 40,17.909 40,40s-17.909,40 -40,40c-4.418,0 -8,3.582 -8,8l0,80c0,4.418 3.582,8 8,8l464,0c4.418,0 8,-3.582 8,-8l0,-80c0,-4.418 -3.582,-8 -8,-8c-22.091,0 -40,-17.909 -40,-40s17.909,-40 40,-40zm-55.476,47.956c3.532,24.61 22.867,43.944 47.476,47.476l0,64.568l-448,0l0,-64.568c30.614,-4.394 51.87,-32.773 47.476,-63.388c-3.532,-24.609 -22.866,-43.944 -47.476,-47.476l0,-64.568l448,0l0,64.568c-30.614,4.394 -51.87,32.773 -47.476,63.388z" fill="#000000" stroke="#000000"/>
    </g>
   </g>
   <g id="svg_46"/>

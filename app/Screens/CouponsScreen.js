@@ -6,11 +6,22 @@ import Screen from '../components/Screen';
 import DisplayCoupon from '../components/DisplayCoupon';
 import { Coupon, Rarity } from '../BusinessLayer/DataTypes/CouponObject';
 
+const coupons = [
+	{ id: 1, coupon: new Coupon(Rarity.uncommon, 'I Love You') },
+	{ id: 2, coupon: new Coupon(Rarity.legendary, 'I Love You') },
+];
+
 export default function CouponsScreen() {
 	return (
 		<Screen style={styles.container}>
 			<AppText>Hello World</AppText>
-			<DisplayCoupon coupon={new Coupon(Rarity.epic, 'I Love You')} />
+			{coupons.map((item) => (
+				<DisplayCoupon
+					key={item.id}
+					coupon={item.coupon}
+					style={{ backgroundColor: 'red' }}
+				/>
+			))}
 		</Screen>
 	);
 }

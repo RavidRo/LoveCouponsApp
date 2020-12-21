@@ -5,9 +5,9 @@ import DisplayCouponSVG from './SVG/DisplayCouponSVG';
 import { Coupon } from '../BusinessLayer/DataTypes/CouponObject';
 import AppText from './AppText';
 
-export default function DisplayCoupon({ coupon }) {
+export default function DisplayCoupon({ coupon, style }) {
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, style]}>
 			<AppText style={styles.text} numberOfLines={4}>
 				רביד בוחר מה עושים ליום שלם
 			</AppText>
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 		top: '10%',
 		right: '22%',
 		width: '78%',
+		zIndex: 1,
 		// backgroundColor: 'red',
 	},
 	container: {
@@ -39,4 +40,5 @@ const styles = StyleSheet.create({
 
 DisplayCoupon.propTypes = {
 	coupon: PropTypes.instanceOf(Coupon).isRequired,
+	style: PropTypes.object,
 };
