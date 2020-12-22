@@ -3,8 +3,9 @@ import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 
 import CouponSVG from './SVG/CouponSVG';
+import settings from '../config/settings';
 
-const maxPoints = 100;
+const maxPoints = settings.pointsForCoupon;
 export default class CouponCounter extends Component {
 	constructor(props) {
 		super(props);
@@ -15,20 +16,46 @@ export default class CouponCounter extends Component {
 			animationDuration: props.animationDuration || 0.1, //Seconds per point gained
 		};
 	}
-
-	addPoints(addedPoints) {
-		const newPoints = Math.min(this.state.points + addedPoints, maxPoints);
-		this.setState({
-			points: newPoints,
-		});
+	// !This is a private method and should not be used externally
+	// !the actual points will not be synchronized with the animation
+	animateTo(valueTo) {
+		// Im tracking the animation value to show the user a number of the value on the screen
 		this.state.pointsAnim.addListener((progress) => {
 			this.setState({ pointsDisplaying: progress.value });
 		});
+
+		// I'm stopping the current animation before starting a new one
+		const currentValue = this.state.pointsAnim.stopAnimation();
+		const valueChangeBy = Math.abs(currentValue - valueTo);
+
 		Animated.timing(this.state.pointsAnim, {
-			toValue: newPoints,
-			duration: addedPoints * 1000 * this.state.animationDuration,
+			toValue: valueTo,
+			duration: valueChangeBy * 1000 * this.state.animationDuration,
 			useNativeDriver: false,
 		}).start();
+	}
+
+	addPoints(addedPoints) {
+		const newPoints = this.state.points + addedPoints;
+		this.setState({
+			points: newPoints,
+		});
+		this.animateTo(newPoints);
+	}
+
+	isFull() {
+		return this.state.pointsDisplaying >= maxPoints;
+	}
+	use() {
+		if (this.isFull()) {
+			const newValue = this.state.points - maxPoints;
+			this.animateTo(newValue);
+			this.setState({
+				points: newValue,
+			});
+		} else {
+			throw Error("Can't use points when counter is not full");
+		}
 	}
 
 	render() {

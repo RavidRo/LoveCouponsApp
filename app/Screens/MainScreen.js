@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, TouchableHighlight, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 import AppPicker from '../components/Picker/AppPicker';
 import HeartButton from '../components/HeartButton';
@@ -7,6 +8,7 @@ import PickerItem from '../components/Picker/PickerItem';
 import Screen from '../components/Screen';
 import CouponCounter from '../components/CouponCounter';
 import Timer from '../components/Timer';
+import state from '../BusinessLayer/Data/state';
 
 const items = [
 	{
@@ -26,23 +28,33 @@ const items = [
 	},
 ];
 
-export default function MainScreen() {
+export default function MainScreen({ navigation }) {
 	const counter = useRef(null);
+
+	const addPoints = (pointsToAdd) => {
+		counter.current.addPoints(pointsToAdd);
+		state.addPoints(pointsToAdd);
+	};
+
+	// To get a new coupon you need enough points,
+	const getCoupon = () => {
+		if (counter.isFull()) {
+			console.log('New Coupon'); //TODO: create a new coupon here
+			counter.use();
+		}
+	};
+
 	return (
 		<Screen style={styles.container}>
-			<Timer style={styles.counter} />
+			<Button title="=>" onPress={navigation.openDrawer()} />
+			<Timer style={styles.timer} />
 			<View style={styles.couponContainer}>
-				<CouponCounter ref={counter} />
+				<TouchableHighlight onPress={getCoupon}>
+					<CouponCounter ref={counter} />
+				</TouchableHighlight>
 			</View>
 			<View style={styles.pickerBtnContainer}>
-				<AppPicker
-					PickerItemComponent={PickerItem}
-					items={items}
-					onSelectItem={(item) =>
-						counter.current.addPoints(item.points)
-					}
-					CostumePickerButton={HeartButton}
-				/>
+				<MainPicker addPoints={addPoints} />
 			</View>
 		</Screen>
 	);
@@ -54,7 +66,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		alignItems: 'center',
 	},
-	counter: {
+	timer: {
 		marginTop: '20%',
 		flex: 0.25,
 	},
@@ -67,3 +79,22 @@ const styles = StyleSheet.create({
 		// marginBottom: '10%',
 	},
 });
+
+MainScreen.propTypes = {
+	navigation: PropTypes.object,
+};
+
+// TODO: Extract this to another file
+function MainPicker({ addPoints }) {
+	return (
+		<AppPicker
+			PickerItemComponent={PickerItem}
+			items={items}
+			onSelectItem={(item) => addPoints(item.points)}
+			CostumePickerButton={HeartButton}
+		/>
+	);
+}
+MainPicker.propTypes = {
+	addPoints: PropTypes.func,
+};

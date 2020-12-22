@@ -16,44 +16,54 @@ function handleError(functionName, error) {
 }
 
 // Get the reference to a specific doc
-function getRef(collection, docId) {
+function getDocRef(collection, docId) {
 	return db.collection(collection).doc(docId);
 }
 
 // *--------------------------Public Functions--------------------------
 
-function addDocToCollection(collection, doc) {
+function addDocToCollection(collection, doc, docId = undefined) {
 	return db
 		.collection(collection)
-		.add(doc)
+		.doc(docId)
+		.set(doc)
 		.catch((error) => handleError('addDocToCollection', error));
 }
 
 function getDoc(collection, docId) {
-	return getRef(collection, docId)
+	return getDocRef(collection, docId)
 		.get()
 		.then((snapshot) => snapshot.data())
 		.catch((error) => handleError('getDocSnapshot', error));
 }
 
+function getCollection(collection) {
+	return db
+		.collection(collection)
+		.get()
+		.then((querySnapshot) =>
+			querySnapshot.docs.map((snapshot) => snapshot.data())
+		)
+		.catch((error) => handleError('getCollection', error));
+}
+
 function updateADocument(collection, docId, data) {
-	return getRef(collection, docId)
-		.update(data)
+	return getDocRef(collection, docId)
+		.update({ ...data, timestamp: FieldValue.serverTimestamp() })
 		.catch((error) => handleError('updateADocument', error));
 }
 
 function incrementNumericField(collection, docId, field, incrementBy) {
-	return getRef(collection, docId)
-		.update({
-			[field]: FieldValue.increment(incrementBy),
-			timestamp: FieldValue.serverTimestamp(),
-		})
-		.catch((error) => handleError('incrementNumericField', error));
+	const data = {
+		[field]: FieldValue.increment(incrementBy),
+	};
+	return updateADocument(collection, docId, data);
 }
 
 export default {
 	addDocToCollection,
 	getDoc,
+	getCollection,
 	updateADocument,
 	incrementNumericField,
 };
