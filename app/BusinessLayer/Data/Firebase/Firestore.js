@@ -1,9 +1,11 @@
 import * as firebase from 'firebase';
-import firebaseConfig from '../../../config/firebaseConfig';
 import 'firebase/firestore';
 
+import firebaseConfig from '../../../config/firebaseConfig';
+import './FirebaseTimerFix';
+
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
@@ -47,7 +49,7 @@ function getCollection(collection) {
 		.catch((error) => handleError('getCollection', error));
 }
 
-function updateADocument(collection, docId, data) {
+function updateDocument(collection, docId, data) {
 	return getDocRef(collection, docId)
 		.update({ ...data, timestamp: FieldValue.serverTimestamp() })
 		.catch((error) => handleError('updateADocument', error));
@@ -57,13 +59,13 @@ function incrementNumericField(collection, docId, field, incrementBy) {
 	const data = {
 		[field]: FieldValue.increment(incrementBy),
 	};
-	return updateADocument(collection, docId, data);
+	return updateDocument(collection, docId, data);
 }
 
 export default {
 	addDocToCollection,
 	getDoc,
 	getCollection,
-	updateADocument,
+	updateDocument,
 	incrementNumericField,
 };

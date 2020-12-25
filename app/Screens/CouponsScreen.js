@@ -1,26 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 import AppText from '../components/AppText';
 import Screen from '../components/Screen';
 import DisplayCoupon from '../components/DisplayCoupon';
-import { Coupon, Rarity } from '../BusinessLayer/DataTypes/CouponObject';
+import Coupon from '../BusinessLayer/DataTypes/Coupon';
+import couponsConfig from '../config/couponsConfig';
+import couponsHandler from '../BusinessLayer/Data/couponsHandler';
 
-const coupons = [
-	{ id: 1, coupon: new Coupon(Rarity.uncommon, 'I Love You') },
-	{ id: 2, coupon: new Coupon(Rarity.legendary, 'I Love You') },
+const couponsInit = [
+	new Coupon(couponsConfig.rarities.uncommon, 'I Love You'),
+	new Coupon(couponsConfig.rarities.legendary, 'I <3 U'),
 ];
 
 export default function CouponsScreen() {
+	const [displayingCoupons, setDisplayingCoupons] = useState(couponsInit);
+	couponsHandler.listenToChange(setDisplayingCoupons);
+
 	return (
 		<Screen style={styles.container}>
 			<AppText>Hello World</AppText>
-			{coupons.map((item) => (
-				<DisplayCoupon
-					key={item.id}
-					coupon={item.coupon}
-					style={{ backgroundColor: 'red' }}
-				/>
+			{displayingCoupons.map((item, index) => (
+				<DisplayCoupon key={index} coupon={item} />
 			))}
 		</Screen>
 	);

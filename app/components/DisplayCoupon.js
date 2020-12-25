@@ -2,14 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import DisplayCouponSVG from './SVG/DisplayCouponSVG';
-import { Coupon } from '../BusinessLayer/DataTypes/CouponObject';
+import Coupon from '../BusinessLayer/DataTypes/Coupon';
 import AppText from './AppText';
 
 export default function DisplayCoupon({ coupon, style }) {
 	return (
 		<View style={[styles.container, style]}>
 			<AppText style={styles.text} numberOfLines={4}>
-				רביד בוחר מה עושים ליום שלם
+				{coupon.text}
 			</AppText>
 			<DisplayCouponSVG
 				style={styles.coupon}

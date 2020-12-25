@@ -14,7 +14,7 @@ export default function App() {
 		<NavigationContainer>
 			<Drawer.Navigator
 				initialRouteName="Main"
-				drawerContent={CouponsScreen}
+				drawerContent={(props) => <CouponsScreen {...props} />}
 				drawerStyle={{ width: drawerWidth }}
 			>
 				<Drawer.Screen name="Main" component={MainScreen} />

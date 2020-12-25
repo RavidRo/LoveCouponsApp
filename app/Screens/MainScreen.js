@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 import { Button, StyleSheet, TouchableHighlight, View } from 'react-native';
 import PropTypes from 'prop-types';
 
-import AppPicker from '../components/Picker/AppPicker';
-import HeartButton from '../components/HeartButton';
-import PickerItem from '../components/Picker/PickerItem';
 import Screen from '../components/Screen';
 import CouponCounter from '../components/CouponCounter';
 import Timer from '../components/Timer';
-import state from '../BusinessLayer/Data/state';
+import state from '../BusinessLayer/Data/stateHandler';
+import settings from '../config/settings';
+import MainPicker from '../components/MainPicker';
+import Coupon from '../BusinessLayer/DataTypes/Coupon';
 
 const items = [
 	{
@@ -36,17 +36,17 @@ export default function MainScreen({ navigation }) {
 		state.addPoints(pointsToAdd);
 	};
 
-	// To get a new coupon you need enough points,
 	const getCoupon = () => {
-		if (counter.isFull()) {
-			console.log('New Coupon'); //TODO: create a new coupon here
-			counter.use();
+		if (counter.current.isFull()) {
+			Coupon.createNewCoupon().save();
+			counter.current.use();
+			state.removePoints(settings.pointsForCoupon);
 		}
 	};
 
 	return (
 		<Screen style={styles.container}>
-			<Button title="=>" onPress={navigation.openDrawer()} />
+			<Button title="=>" onPress={() => navigation.openDrawer()} />
 			<Timer style={styles.timer} />
 			<View style={styles.couponContainer}>
 				<TouchableHighlight onPress={getCoupon}>
@@ -54,7 +54,7 @@ export default function MainScreen({ navigation }) {
 				</TouchableHighlight>
 			</View>
 			<View style={styles.pickerBtnContainer}>
-				<MainPicker addPoints={addPoints} />
+				<MainPicker addPoints={addPoints} items={items} />
 			</View>
 		</Screen>
 	);
@@ -82,19 +82,4 @@ const styles = StyleSheet.create({
 
 MainScreen.propTypes = {
 	navigation: PropTypes.object,
-};
-
-// TODO: Extract this to another file
-function MainPicker({ addPoints }) {
-	return (
-		<AppPicker
-			PickerItemComponent={PickerItem}
-			items={items}
-			onSelectItem={(item) => addPoints(item.points)}
-			CostumePickerButton={HeartButton}
-		/>
-	);
-}
-MainPicker.propTypes = {
-	addPoints: PropTypes.func,
 };

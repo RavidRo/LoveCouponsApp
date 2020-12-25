@@ -19,20 +19,22 @@ export default class CouponCounter extends Component {
 	// !This is a private method and should not be used externally
 	// !the actual points will not be synchronized with the animation
 	animateTo(valueTo) {
-		// Im tracking the animation value to show the user a number of the value on the screen
-		this.state.pointsAnim.addListener((progress) => {
-			this.setState({ pointsDisplaying: progress.value });
-		});
-
 		// I'm stopping the current animation before starting a new one
-		const currentValue = this.state.pointsAnim.stopAnimation();
-		const valueChangeBy = Math.abs(currentValue - valueTo);
+		this.state.pointsAnim.stopAnimation((currentValue) => {
+			// const currentValue = this.state.pointsDisplaying;
+			const valueChangeBy = Math.abs(currentValue - valueTo);
 
-		Animated.timing(this.state.pointsAnim, {
-			toValue: valueTo,
-			duration: valueChangeBy * 1000 * this.state.animationDuration,
-			useNativeDriver: false,
-		}).start();
+			// Im tracking the animation value to show the user a number of the value on the screen
+			this.state.pointsAnim.addListener((progress) => {
+				this.setState({ pointsDisplaying: progress.value });
+			});
+
+			Animated.timing(this.state.pointsAnim, {
+				toValue: valueTo,
+				duration: valueChangeBy * 1000 * this.state.animationDuration,
+				useNativeDriver: false,
+			}).start();
+		});
 	}
 
 	addPoints(addedPoints) {
