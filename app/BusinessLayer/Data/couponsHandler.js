@@ -4,8 +4,10 @@ import Firestore from './Firebase/Firestore';
 // TODO: Need to handle exceptions when calling Firestore functions
 const collectionName = 'coupons';
 
-// This class allows me to change the cache only using a setter
-// In the setter im notifying observer of the change
+/**
+ * This class allows me to change the cache only using a setter
+ * In the setter im notifying observer of the change
+ */
 class CouponsCache {
 	constructor() {
 		// Implements the singleton pattern - I want only one instance of this class
@@ -37,7 +39,11 @@ class CouponsCache {
 const cache = new CouponsCache();
 
 // * ---------------------------------------- public functions ----------------------------------------
-
+/**
+ * Gets all the coupons from the database
+ * @async
+ * @returns {Promise<Coupon[]>} Promise object representing an array of all the coupons
+ */
 async function getCoupons() {
 	if (!cache.loaded) {
 		cache.coupons = await Firestore.getCollection(collectionName).map(
@@ -49,6 +55,7 @@ async function getCoupons() {
 
 /**
  * Saves a coupon at the database
+ * @async
  * @param {Coupon} coupon the coupon to save
  * @throws Throws an error if coupon is already saved
  */
@@ -68,6 +75,13 @@ function saveCoupon(coupon) {
 	return Firestore.addDocToCollection(collectionName, coupon.toObject());
 }
 
+/**
+ * Used to listen for changes in the local coupons data
+ * @param {(coupons: Coupon[]) => void} callback A call back which invoked when a changed occur in the local coupons data
+ * @example
+ * listenToChange((coupons) =>
+ * 	coupons.foreach(coupon => console.log(coupon.text)))
+ */
 function listenToChange(callback) {
 	cache.addObserver(callback);
 }
