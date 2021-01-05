@@ -45,7 +45,7 @@ export default class Rarity {
 
 	/** @param {String[]} texts Add texts that will have a chance to be added to a new coupon of this rarity */
 	addTexts(texts) {
-		texts.forEach(this.addText);
+		texts.forEach((text) => this.addText(text));
 	}
 
 	/** @returns {String} Random text from the list of texts or `undefined` if empty */
