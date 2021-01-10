@@ -1,4 +1,5 @@
 import Coupon from '../DataTypes/Coupon';
+import Time from '../DataTypes/Time';
 import Firestore from './Firebase/Firestore';
 
 // TODO: Need to handle exceptions when calling Firestore functions
@@ -27,6 +28,10 @@ class CouponsCache {
 		// Notify observers
 		this.observers.forEach((callback) => callback(value));
 	}
+	get coupons() {
+		return this._coupons;
+	}
+
 	addObserver(callback) {
 		this.observers.push(callback);
 	}
@@ -37,21 +42,6 @@ class CouponsCache {
 }
 
 const cache = new CouponsCache();
-
-// * ---------------------------------------- public functions ----------------------------------------
-/**
- * Gets all the coupons from the database
- * @async
- * @returns {Promise<Coupon[]>} Promise object representing an array of all the coupons
- */
-async function getCoupons() {
-	if (!cache.loaded) {
-		cache.coupons = await Firestore.getCollection(collectionName).map(
-			Coupon.fromObject
-		);
-	}
-	return cache.coupons;
-}
 
 /**
  * Saves a coupon at the database
@@ -75,6 +65,30 @@ function saveCoupon(coupon) {
 	return Firestore.addDocToCollection(collectionName, coupon.toObject());
 }
 
+// * ---------------------------------------- public functions ----------------------------------------
+/**
+ * Gets all the coupons from the database
+ * @async
+ * @returns {Promise<Coupon[]>} Promise object representing an array of all the coupons
+ */
+async function getCoupons() {
+	if (!cache.loaded) {
+		const docs = await Firestore.getCollection(collectionName);
+		cache.coupons = docs.map(Coupon.fromObject);
+	}
+	return cache.coupons;
+}
+
+/**
+ * Creates a random coupon and saves it in the database.
+ * @return The random created coupon.
+ */
+function createNewCoupon() {
+	const coupon = Coupon.createNewCoupon();
+	saveCoupon(coupon);
+	return coupon;
+}
+
 /**
  * Used to listen for changes in the local coupons data
  * @param {(coupons: Coupon[]) => void} callback A call back which invoked when a changed occur in the local coupons data
@@ -88,6 +102,6 @@ function listenToChange(callback) {
 
 export default {
 	getCoupons,
-	saveCoupon,
 	listenToChange,
+	createNewCoupon,
 };

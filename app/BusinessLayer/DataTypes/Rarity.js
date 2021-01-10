@@ -64,7 +64,7 @@ export default class Rarity {
 	 * @returns The rarity instance with the given id or `undefined` if no such rarity exists
 	 * */
 	static getRarity(id) {
-		this.instances.find((instance) => instance.id === id);
+		return this.instances.find((instance) => instance.id === id);
 	}
 
 	/**

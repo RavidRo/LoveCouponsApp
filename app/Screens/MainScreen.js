@@ -6,9 +6,9 @@ import Screen from '../components/Screen';
 import CouponCounter from '../components/CouponCounter';
 import Timer from '../components/Timer';
 import state from '../BusinessLayer/Data/stateHandler';
+import coupons from '../BusinessLayer/Data/couponsHandler';
 import settings from '../config/settings';
 import MainPicker from '../components/MainPicker';
-import Coupon from '../BusinessLayer/DataTypes/Coupon';
 
 const items = [
 	{
@@ -38,9 +38,9 @@ export default function MainScreen({ navigation }) {
 
 	const getCoupon = () => {
 		if (counter.current.isFull()) {
-			Coupon.createNewCoupon().save();
-			counter.current.use();
-			state.removePoints(settings.pointsForCoupon);
+			coupons.createNewCoupon(); //Creating the new coupon
+			counter.current.usePoints(); //Remove the points from the points counter
+			state.removePoints(settings.pointsForCoupon); //Save the new points value in the database
 		}
 	};
 

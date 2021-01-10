@@ -24,11 +24,20 @@ function getDocRef(collection, docId) {
 
 // *--------------------------Public Functions--------------------------
 
-function addDocToCollection(collection, doc, docId = undefined) {
-	return db
-		.collection(collection)
-		.doc(docId)
-		.set(doc)
+/**
+ * Adds a document to a specific collection
+ * @param {string} collection - The collection to add the document
+ * @param {object} data - The document data
+ * @param {string} docId - Non empty string representing the id. If none given then a random one created.
+ */
+function addDocToCollection(collection, data, docId = null) {
+	const collectionRef = db.collection(collection);
+	const getDocFunc = collectionRef.doc;
+	const docRef = docId
+		? getDocFunc.call(collectionRef, docId)
+		: getDocFunc.call(collectionRef);
+	return docRef
+		.set(data)
 		.catch((error) => handleError('addDocToCollection', error));
 }
 

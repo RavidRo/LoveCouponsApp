@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Modal, FlatList, View } from 'react-native';
 import PropTypes from 'prop-types';
-import Screen from '../Screen';
 import colors from '../../config/colors';
 
 export default function PickerModal({

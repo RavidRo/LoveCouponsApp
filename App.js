@@ -4,10 +4,13 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import MainScreen from './app/Screens/MainScreen';
 import CouponsScreen from './app/Screens/CouponsScreen';
+import couponsConfig from './app/config/couponsConfig';
 
 const drawerWidth = '80%';
 
 const Drawer = createDrawerNavigator();
+
+couponsConfig.init();
 
 export default function App() {
 	return (

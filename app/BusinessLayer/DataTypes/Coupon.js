@@ -1,9 +1,13 @@
-import couponsConfig from '../../config/couponsConfig';
 import Rarity from './Rarity';
 
 export default class Coupon {
 	constructor(rarity, text, saved = false) {
 		this.rarity = rarity;
+		if (!rarity) {
+			throw new Error(
+				`Coupon/constructor: Rarity was ${rarity}, Can't create a coupon without a rarity. `
+			);
+		}
 		this.text = text;
 
 		// ?Maybe you can give each coupon an id instead of tracking if is saved or not. Firebase will then handle this shit.
@@ -52,7 +56,7 @@ export default class Coupon {
 	// The reverse function for "toObject"
 	static fromObject(couponObject, saved = true) {
 		return new Coupon(
-			couponsConfig.idRarityObject[couponObject.rarityId],
+			Rarity.getRarity(couponObject.rarityId),
 			couponObject.text,
 			saved
 		);

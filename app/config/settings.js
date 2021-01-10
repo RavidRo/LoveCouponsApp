@@ -1,3 +1,3 @@
 export default {
-	pointsForCoupon: 100,
+	pointsForCoupon: 20,
 };

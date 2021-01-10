@@ -48,7 +48,7 @@ export default class CouponCounter extends Component {
 	isFull() {
 		return this.state.pointsDisplaying >= maxPoints;
 	}
-	use() {
+	usePoints() {
 		if (this.isFull()) {
 			const newValue = this.state.points - maxPoints;
 			this.animateTo(newValue);

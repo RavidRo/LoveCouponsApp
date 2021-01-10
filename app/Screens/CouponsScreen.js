@@ -4,18 +4,18 @@ import { StyleSheet } from 'react-native';
 import AppText from '../components/AppText';
 import Screen from '../components/Screen';
 import DisplayCoupon from '../components/DisplayCoupon';
-import Coupon from '../BusinessLayer/DataTypes/Coupon';
-import couponsConfig from '../config/couponsConfig';
 import couponsHandler from '../BusinessLayer/Data/couponsHandler';
 
-const couponsInit = [
-	new Coupon(couponsConfig.rarities.uncommon, 'I Love You'),
-	new Coupon(couponsConfig.rarities.legendary, 'I <3 U'),
-];
-
 export default function CouponsScreen() {
-	const [displayingCoupons, setDisplayingCoupons] = useState(couponsInit);
-	couponsHandler.listenToChange(setDisplayingCoupons);
+	const [displayingCoupons, setDisplayingCoupons] = useState([]);
+	// TODO: 1) Handle errors correctly 2) Add some kind of loading indicator 3) Don't put the initial loading here
+	couponsHandler.getCoupons().then(setDisplayingCoupons);
+	// couponsHandler.getCoupons().then(console.log);
+
+	couponsHandler.listenToChange((coupons) => {
+		console.log('New Coupon Registered');
+		setDisplayingCoupons(coupons);
+	});
 
 	return (
 		<Screen style={styles.container}>
