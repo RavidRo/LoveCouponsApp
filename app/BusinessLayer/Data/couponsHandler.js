@@ -72,10 +72,7 @@ function saveCoupon(coupon) {
  * @returns {Promise<Coupon[]>} Promise object representing an array of all the coupons
  */
 async function getCoupons() {
-	if (!cache.loaded) {
-		const docs = await Firestore.getCollection(collectionName);
-		cache.coupons = docs.map(Coupon.fromObject);
-	}
+	load();
 	return cache.coupons;
 }
 
@@ -100,8 +97,16 @@ function listenToChange(callback) {
 	cache.addObserver(callback);
 }
 
+async function load() {
+	if (!cache.loaded) {
+		const docs = await Firestore.getCollection(collectionName);
+		cache.coupons = docs.map(Coupon.fromObject);
+	}
+}
+
 export default {
 	getCoupons,
 	listenToChange,
 	createNewCoupon,
+	load,
 };

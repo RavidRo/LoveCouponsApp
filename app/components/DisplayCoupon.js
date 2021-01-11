@@ -8,7 +8,7 @@ import AppText from './AppText';
 export default function DisplayCoupon({ coupon, style }) {
 	return (
 		<View style={[styles.container, style]}>
-			<AppText style={styles.text} numberOfLines={4}>
+			<AppText style={styles.text} numberOfLines={6}>
 				{coupon.text}
 			</AppText>
 			<DisplayCouponSVG
@@ -22,14 +22,16 @@ export default function DisplayCoupon({ coupon, style }) {
 const styles = StyleSheet.create({
 	text: {
 		position: 'absolute',
-		fontSize: 35,
-		top: '10%',
-		right: '22%',
-		width: '78%',
+		fontSize: 25,
+		top: '8.5%',
+		left: '30%',
+		width: '52%',
 		zIndex: 1,
-		// backgroundColor: 'red',
+		// backgroundColor: 'yellow',
 	},
 	container: {
+		marginLeft: '-17.5%',
+		marginVertical: '-10%',
 		transform: [
 			{
 				scale: 0.65,

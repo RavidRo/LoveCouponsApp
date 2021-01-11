@@ -5,17 +5,17 @@ import HeartButton from './HeartButton';
 import PickerItem from './Picker/PickerItem';
 
 // TODO: Extract this to another file
-export default function MainPicker({ addPoints, items }) {
+export default function MainPicker({ onSelect, items }) {
 	return (
 		<AppPicker
 			PickerItemComponent={PickerItem}
 			items={items}
-			onSelectItem={(item) => addPoints(item.points)}
+			onSelectItem={(item) => onSelect(item.points)}
 			CostumePickerButton={HeartButton}
 		/>
 	);
 }
 MainPicker.propTypes = {
-	addPoints: PropTypes.func.isRequired,
+	onSelect: PropTypes.func.isRequired,
 	items: PropTypes.array.isRequired,
 };

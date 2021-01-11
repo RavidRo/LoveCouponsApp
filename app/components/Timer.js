@@ -6,6 +6,7 @@ import { Bar } from 'react-native-progress';
 import AppText from './AppText';
 import Time from '../BusinessLayer/DataTypes/Time';
 import Heart from './Heart';
+import settings from '../config/settings';
 
 const barWidth = '70%';
 const barHeight = 40;
@@ -13,29 +14,20 @@ const filledColor = 'pink';
 const unfilledColor = 'white';
 const borderColor = 'red';
 
-const timeLeft = 1200; //In seconds
-const originalTime = 3660;
+const timeObject = new Time();
+
+function getText(timeLeft) {
+	const hours = timeObject.getHours(timeLeft);
+	const minutes = timeObject.getMinutes(timeLeft);
+	const seconds = timeObject.getSeconds(timeLeft);
+	return `${hours ? `${hours}H` : ''} ${minutes ? `${minutes}M` : ''} ${
+		seconds ? `${seconds}S` : 'Ready!'
+	}`;
+}
 
 export default class Timer extends Component {
 	constructor(props) {
 		super(props);
-
-		const timeObject = new Time(timeLeft);
-
-		this.state = {
-			timeLeft,
-			hours: timeObject.hours,
-			minutes: timeObject.minutes,
-			seconds: timeObject.seconds,
-		};
-		setInterval(() => {
-			this.setState({
-				hours: timeObject.getHours(this.state.timeLeft - 1),
-				minutes: timeObject.getMinutes(this.state.timeLeft - 1),
-				seconds: timeObject.getSeconds(this.state.timeLeft - 1),
-				timeLeft: this.state.timeLeft - 1,
-			});
-		}, 1000);
 	}
 
 	render() {
@@ -44,13 +36,15 @@ export default class Timer extends Component {
 				<View style={styles.container}>
 					<Heart style={styles.heart} />
 					<View style={styles.textContainer}>
-						<AppText
-							style={styles.counterText}
-						>{`${this.state.hours}H ${this.state.minutes}M ${this.state.seconds}S`}</AppText>
+						<AppText style={styles.counterText}>
+							{getText(this.props.timeLeft)}
+						</AppText>
 					</View>
 					<Bar
 						animated
-						progress={1 - this.state.timeLeft / originalTime}
+						progress={
+							1 - this.props.timeLeft / settings.getPointsEvery
+						}
 						color={filledColor}
 						unfilledColor={unfilledColor}
 						borderColor={borderColor}
@@ -84,7 +78,8 @@ const styles = StyleSheet.create({
 		top: -11,
 	},
 });
+
 Timer.propTypes = {
-	animationDuration: PropTypes.number,
 	style: PropTypes.object,
+	timeLeft: PropTypes.number,
 };

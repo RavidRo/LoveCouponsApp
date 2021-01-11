@@ -9,6 +9,10 @@ import state from '../BusinessLayer/Data/stateHandler';
 import coupons from '../BusinessLayer/Data/couponsHandler';
 import settings from '../config/settings';
 import MainPicker from '../components/MainPicker';
+import { useState } from 'react';
+import stateHandler from '../BusinessLayer/Data/stateHandler';
+import { useEffect } from 'react';
+import useInterval from '../Hooks/useInterval';
 
 const items = [
 	{
@@ -29,6 +33,31 @@ const items = [
 ];
 
 export default function MainScreen({ navigation }) {
+	// Time control logic:
+	const [timeLeft, setTimeLeft] = useState(settings.getPointsEvery); // 1) Set the initial time to 0
+	useInterval(() => {
+		if (timeLeft > 0) {
+			setTimeLeft(timeLeft - 1);
+		}
+	}, 1000); // 2) Remove 1 second every second
+	// 3) Synchronize with database
+	useEffect(() => {
+		stateHandler.getLastTimeSent().then((time) => {
+			if (time) {
+				const timeSince = Math.round(
+					new Date().getTime() / 1000 - time.seconds
+				);
+				const timeLeft = Math.max(
+					settings.getPointsEvery - timeSince,
+					0
+				);
+				setTimeLeft(timeLeft);
+			} else {
+				setTimeLeft(0);
+			}
+		});
+	}, []);
+
 	const counter = useRef(null);
 
 	const addPoints = (pointsToAdd) => {
@@ -47,14 +76,23 @@ export default function MainScreen({ navigation }) {
 	return (
 		<Screen style={styles.container}>
 			<Button title="=>" onPress={() => navigation.openDrawer()} />
-			<Timer style={styles.timer} />
+			<Timer style={styles.timer} timeLeft={timeLeft} />
 			<View style={styles.couponContainer}>
 				<TouchableHighlight onPress={getCoupon}>
 					<CouponCounter ref={counter} />
 				</TouchableHighlight>
 			</View>
 			<View style={styles.pickerBtnContainer}>
-				<MainPicker addPoints={addPoints} items={items} />
+				<MainPicker
+					items={items}
+					onSelect={(points) => {
+						console.log(timeLeft);
+						if (timeLeft <= 0) {
+							addPoints(points);
+							setTimeLeft(settings.getPointsEvery);
+						}
+					}}
+				/>
 			</View>
 		</Screen>
 	);

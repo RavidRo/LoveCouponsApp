@@ -1,5 +1,5 @@
 export default class Time {
-	constructor(time) {
+	constructor(time = 0) {
 		this.timeLeft = time;
 		this.setFields(time);
 	}

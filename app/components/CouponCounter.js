@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import CouponSVG from './SVG/CouponSVG';
 import settings from '../config/settings';
+import stateHandler from '../BusinessLayer/Data/stateHandler';
 
 const maxPoints = settings.pointsForCoupon;
 export default class CouponCounter extends Component {
@@ -13,8 +14,10 @@ export default class CouponCounter extends Component {
 			pointsAnim: new Animated.Value(0), //The animation
 			points: 0, //The actual points in a given time
 			pointsDisplaying: 0, //The points displaying to the user
-			animationDuration: props.animationDuration || 0.1, //Seconds per point gained
+			animationDuration: props.animationDuration || 0.01, //Seconds per point gained
 		};
+		// Synchronize state with database
+		stateHandler.getPoints().then((points) => this.addPoints(points));
 	}
 	// !This is a private method and should not be used externally
 	// !the actual points will not be synchronized with the animation

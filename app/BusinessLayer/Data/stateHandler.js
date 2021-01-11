@@ -45,7 +45,7 @@ async function getState() {
 /**
  * Retrieves the user points from the database or cache
  * @async
- * @returns {Number} The user current points
+ * @returns {Promise<Number>} The user current points
  */
 async function getPoints() {
 	await loadState();
@@ -56,7 +56,7 @@ async function getPoints() {
 /**
  * Retrieves the last time the user earned points from the database or cache
  * @async
- * @returns {Date} The last time the user earned some points
+ * @returns {Promise<Date>} The last time the user earned some points or null if never sent.
  */
 async function getLastTimeSent() {
 	await loadState();
