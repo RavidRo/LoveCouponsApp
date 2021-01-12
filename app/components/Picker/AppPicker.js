@@ -45,7 +45,6 @@ AppPicker.propTypes = {
 	icon: PropTypes.string,
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
-			value: PropTypes.number.isRequired,
 			label: PropTypes.string.isRequired,
 		}).isRequired
 	).isRequired,

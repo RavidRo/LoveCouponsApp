@@ -10,6 +10,7 @@ const drawerWidth = '80%';
 
 const Drawer = createDrawerNavigator();
 
+// Set the rarities witch are set locally at the moment
 couponsConfig.init();
 
 export default function App() {

@@ -10,7 +10,11 @@ export default function MainPicker({ onSelect, items }) {
 		<AppPicker
 			PickerItemComponent={PickerItem}
 			items={items}
-			onSelectItem={(item) => onSelect(item.points)}
+			onSelectItem={(item) =>
+				item
+					.func()
+					.then((response) => onSelect(response ? item.points : 0))
+			}
 			CostumePickerButton={HeartButton}
 		/>
 	);

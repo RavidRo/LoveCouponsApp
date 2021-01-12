@@ -1,6 +1,5 @@
 import Coupon from '../DataTypes/Coupon';
-import Time from '../DataTypes/Time';
-import Firestore from './Firebase/Firestore';
+import { Firestore } from './Firebase/Firebase';
 
 // TODO: Need to handle exceptions when calling Firestore functions
 const collectionName = 'coupons';

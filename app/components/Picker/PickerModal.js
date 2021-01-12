@@ -23,7 +23,7 @@ export default function PickerModal({
 				<Button title="Close" onPress={onClose} />
 				<FlatList
 					data={data}
-					keyExtractor={(item) => item.value.toString()}
+					keyExtractor={(_, index) => index.toString()}
 					numColumns={numberOfColumns}
 					renderItem={({ item }) => (
 						<PickerItemComponent
@@ -48,7 +48,6 @@ PickerModal.propTypes = {
 	visible: PropTypes.bool.isRequired,
 	data: PropTypes.arrayOf(
 		PropTypes.shape({
-			value: PropTypes.number.isRequired,
 			label: PropTypes.string.isRequired,
 		}).isRequired
 	).isRequired,

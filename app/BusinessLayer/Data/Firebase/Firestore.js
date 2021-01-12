@@ -1,12 +1,6 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
-import firebaseConfig from '../../../config/firebaseConfig';
-import './FirebaseTimerFix';
-
-// Initialize Firebase
-if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
-
 const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
 

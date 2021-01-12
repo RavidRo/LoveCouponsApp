@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, StyleSheet, TouchableHighlight, View } from 'react-native';
 import PropTypes from 'prop-types';
+import * as ImagePicker from 'expo-image-picker';
 
 import Screen from '../components/Screen';
 import CouponCounter from '../components/CouponCounter';
@@ -13,22 +14,46 @@ import { useState } from 'react';
 import stateHandler from '../BusinessLayer/Data/stateHandler';
 import { useEffect } from 'react';
 import useInterval from '../Hooks/useInterval';
+// import Firebase from '../BusinessLayer/Data/Firebase/Firebase';
 
 const items = [
 	{
-		value: 1,
-		label: 'I',
-		points: 5,
-	},
-	{
-		value: 2,
-		label: 'Love',
-		points: 10,
-	},
-	{
-		value: 3,
 		label: 'You',
+		points: 5,
+		func: async function () {
+			return true;
+		},
+	},
+	{
+		label: 'Take a picture ;)',
 		points: 20,
+		// func: async function uploadPicture() {
+		// 	const {
+		// 		status,
+		// 	} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+		// 	if (status !== 'granted') {
+		// 		alert(
+		// 			'Sorry, we need camera roll permissions to make this work!'
+		// 		);
+		// 	} else {
+		// 		let result = await ImagePicker.launchImageLibraryAsync({
+		// 			mediaTypes: ImagePicker.MediaTypeOptions.All,
+		// 			allowsEditing: true,
+		// 			quality: 1,
+		// 		});
+
+		// 		console.log(result);
+
+		// 		if (!result.cancelled) {
+		// 			Firebase.Storage.uploadImage(
+		// 				result.uri,
+		// 				'images'
+		// 			).then(() => console.log('Uploaded successfully'));
+		// 			return true;
+		// 		}
+		// 	}
+		// 	return false;
+		// },
 	},
 ];
 
@@ -86,8 +111,7 @@ export default function MainScreen({ navigation }) {
 				<MainPicker
 					items={items}
 					onSelect={(points) => {
-						console.log(timeLeft);
-						if (timeLeft <= 0) {
+						if (timeLeft <= 0 && points > 0) {
 							addPoints(points);
 							setTimeLeft(settings.getPointsEvery);
 						}
