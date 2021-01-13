@@ -39,13 +39,13 @@ export default class Rarity {
 	}
 
 	/** @param {String} text Add a text that will have a chance to be added to a new coupon of this rarity */
-	addText(text) {
+	addText = (text) => {
 		this.texts.push(text);
-	}
+	};
 
 	/** @param {String[]} texts Add texts that will have a chance to be added to a new coupon of this rarity */
 	addTexts(texts) {
-		texts.forEach((text) => this.addText(text));
+		texts.forEach(this.addText);
 	}
 
 	/** @returns {String} Random text from the list of texts or `undefined` if empty */

@@ -4,7 +4,7 @@ import { FlatList, StyleSheet } from 'react-native';
 import AppText from '../components/AppText';
 import Screen from '../components/Screen';
 import DisplayCoupon from '../components/DisplayCoupon';
-import couponsHandler from '../BusinessLayer/Data/couponsHandler';
+import couponsHandler from '../BusinessLayer/Data/CouponsHandler';
 
 export default function CouponsScreen() {
 	const [displayingCoupons, setDisplayingCoupons] = useState([]);

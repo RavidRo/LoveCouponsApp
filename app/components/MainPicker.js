@@ -12,7 +12,7 @@ export default function MainPicker({ onSelect, items }) {
 			items={items}
 			onSelectItem={(item) =>
 				item
-					.func()
+					.act()
 					.then((response) => onSelect(response ? item.points : 0))
 			}
 			CostumePickerButton={HeartButton}

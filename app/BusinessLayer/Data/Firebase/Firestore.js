@@ -1,5 +1,9 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import firebaseConfig from '../../../config/firebaseConfig';
+
+// Initialize Firebase
+if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
@@ -7,7 +11,7 @@ const FieldValue = firebase.firestore.FieldValue;
 // I don't know at this level how to handle an error.
 // I do want to know where the error occurred so im logging it and throws it again.
 function handleError(functionName, error) {
-	console.log(`Error at Firestore/${functionName}`, error);
+	console.error(`Error at Firestore/${functionName}`, error);
 	throw error;
 }
 

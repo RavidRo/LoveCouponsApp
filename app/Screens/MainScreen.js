@@ -1,61 +1,19 @@
 import React, { useRef } from 'react';
 import { Button, StyleSheet, TouchableHighlight, View } from 'react-native';
 import PropTypes from 'prop-types';
-import * as ImagePicker from 'expo-image-picker';
 
 import Screen from '../components/Screen';
 import CouponCounter from '../components/CouponCounter';
 import Timer from '../components/Timer';
-import state from '../BusinessLayer/Data/stateHandler';
-import coupons from '../BusinessLayer/Data/couponsHandler';
+import state from '../BusinessLayer/Data/StateHandler';
+import coupons from '../BusinessLayer/Data/CouponsHandler';
 import settings from '../config/settings';
 import MainPicker from '../components/MainPicker';
 import { useState } from 'react';
-import stateHandler from '../BusinessLayer/Data/stateHandler';
+import stateHandler from '../BusinessLayer/Data/StateHandler';
 import { useEffect } from 'react';
 import useInterval from '../Hooks/useInterval';
-// import Firebase from '../BusinessLayer/Data/Firebase/Firebase';
-
-const items = [
-	{
-		label: 'You',
-		points: 5,
-		func: async function () {
-			return true;
-		},
-	},
-	{
-		label: 'Take a picture ;)',
-		points: 20,
-		// func: async function uploadPicture() {
-		// 	const {
-		// 		status,
-		// 	} = await ImagePicker.requestMediaLibraryPermissionsAsync();
-		// 	if (status !== 'granted') {
-		// 		alert(
-		// 			'Sorry, we need camera roll permissions to make this work!'
-		// 		);
-		// 	} else {
-		// 		let result = await ImagePicker.launchImageLibraryAsync({
-		// 			mediaTypes: ImagePicker.MediaTypeOptions.All,
-		// 			allowsEditing: true,
-		// 			quality: 1,
-		// 		});
-
-		// 		console.log(result);
-
-		// 		if (!result.cancelled) {
-		// 			Firebase.Storage.uploadImage(
-		// 				result.uri,
-		// 				'images'
-		// 			).then(() => console.log('Uploaded successfully'));
-		// 			return true;
-		// 		}
-		// 	}
-		// 	return false;
-		// },
-	},
-];
+import acts from '../BusinessLayer/Acts';
 
 export default function MainScreen({ navigation }) {
 	// Time control logic:
@@ -109,7 +67,7 @@ export default function MainScreen({ navigation }) {
 			</View>
 			<View style={styles.pickerBtnContainer}>
 				<MainPicker
-					items={items}
+					items={acts}
 					onSelect={(points) => {
 						if (timeLeft <= 0 && points > 0) {
 							addPoints(points);
@@ -137,8 +95,6 @@ const styles = StyleSheet.create({
 	},
 	pickerBtnContainer: {
 		flex: 0.06,
-		// marginTop: '30%',
-		// marginBottom: '10%',
 	},
 });
 

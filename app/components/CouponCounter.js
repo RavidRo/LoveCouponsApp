@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import CouponSVG from './SVG/CouponSVG';
 import settings from '../config/settings';
-import stateHandler from '../BusinessLayer/Data/stateHandler';
+import stateHandler from '../BusinessLayer/Data/StateHandler';
 
 const maxPoints = settings.pointsForCoupon;
 export default class CouponCounter extends Component {
