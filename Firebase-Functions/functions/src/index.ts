@@ -11,18 +11,34 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 export const forwardImageToWhatsapp = functions.firestore
 	.document('images/{imageId}')
 	.onCreate((snapshot) => {
-		functions.logger.info('New Photo!', snapshot.data());
-		const accountSid = 'AC7b93355c8b26d30d9359718254ef9b83';
-		const authToken = ''; //! Insert here your Twilio auth token
-		const client = require('twilio')(accountSid, authToken);
+		const emailAddress = 'loveucoupons@gmail.com';
+		const emailPassword = 'LoveUCoupons9';
+		const emailToSendTo = 'romravid@gmail.com';
 
-		return client.messages
-			.create({
-				mediaUrl: [snapshot.data().url],
-				body: 'You got a new pick from your lover!',
-				from: 'whatsapp:+14155238886',
-				to: 'whatsapp:+972527599544',
-			})
-			.then((message) => console.log(message.sid))
-			.done();
+		functions.logger.log('A new message!', snapshot.data());
+		const nodemailer = require('nodemailer');
+
+		var mail = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: emailAddress,
+				pass: emailPassword,
+			},
+		});
+
+		var mailOptions = {
+			from: emailAddress,
+			to: emailToSendTo,
+			subject: 'A message from your lover ❤',
+			text: 'I have a picture for you ;)',
+			html: `<a href='${snapshot.data().url}'>Click Me!</a>`,
+		};
+
+		return mail.sendMail(mailOptions, function (error: any, info: any) {
+			if (error) {
+				functions.logger.error(error);
+			} else {
+				functions.logger.info('Email sent: ', info.response);
+			}
+		});
 	});
