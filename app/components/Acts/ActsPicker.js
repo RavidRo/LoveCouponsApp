@@ -7,10 +7,13 @@ import HeartButton from '../HeartButton';
 import PickerItem from '../Picker/PickerItem';
 import Acts from '../../BusinessLayer/Acts/Acts';
 import { FinishedModalActContext } from '../../BusinessLayer/Acts/ActsLogic';
+import Loading from '../Loading';
+import ActModal from './ActModal';
 
 // TODO: Extract this to another file
 export default function ActsPicker({ onSelect }) {
 	const [modalItem, setModalItem] = useState(null);
+	const [loading, setLoading] = useState(false);
 	return (
 		<>
 			<AppPicker
@@ -20,23 +23,32 @@ export default function ActsPicker({ onSelect }) {
 					if (item.modal) {
 						setModalItem(item);
 					} else {
-						item.act().then((response) =>
-							onSelect(response ? item.points : 0)
-						);
+						setLoading(true);
+						item.act().then((response) => {
+							setLoading(false);
+							onSelect(response ? item.points : 0);
+						});
 					}
 				}}
 				CostumePickerButton={HeartButton}
 			/>
-			{modalItem && (
-				<FinishedModalActContext.Provider
-					value={(success) => {
-						setModalItem(null);
-						onSelect(success ? modalItem.points : 0);
-					}}
-				>
-					<modalItem.act />
-				</FinishedModalActContext.Provider>
-			)}
+			<ActModal>
+				{modalItem && (
+					<FinishedModalActContext.Provider
+						value={(actPromise) => {
+							setLoading(true);
+							setModalItem(null);
+							actPromise.then((success) => {
+								setLoading(false);
+								onSelect(success ? modalItem.points : 0);
+							});
+						}}
+					>
+						<modalItem.act />
+					</FinishedModalActContext.Provider>
+				)}
+				{loading && <Loading />}
+			</ActModal>
 		</>
 	);
 }

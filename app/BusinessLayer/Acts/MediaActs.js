@@ -4,7 +4,6 @@ import React, { useContext } from 'react';
 
 import MediaHandler from '../Data/MediaHandler';
 import { FinishedModalActContext, handleAct } from './ActsLogic';
-import ActModal from '../../components/Acts/ActModal';
 
 // * ------------------------- SEND MEDIA (Video/Photo) ACT -------------------------
 export const mediaTypes = Object.freeze({
@@ -49,11 +48,12 @@ export function SendPhotoActModal() {
 	const successMessage = 'Photo Sent!';
 
 	const getOnPress = (mediaType) => () =>
-		handleAct(sendMediaAct(mediaType), errorMessage, successMessage).then(
-			finished
+		finished(
+			handleAct(sendMediaAct(mediaType), errorMessage, successMessage)
 		);
+
 	return (
-		<ActModal>
+		<>
 			<Button
 				onPress={getOnPress(mediaTypes.cameraImage)}
 				title={'With Camera'}
@@ -62,7 +62,7 @@ export function SendPhotoActModal() {
 				onPress={getOnPress(mediaTypes.libraryImage)}
 				title={'From Library'}
 			/>
-		</ActModal>
+		</>
 	);
 }
 

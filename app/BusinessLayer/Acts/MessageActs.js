@@ -5,25 +5,24 @@ import { useContext } from 'react';
 import { handleAct, FinishedModalActContext } from './ActsLogic';
 import MessagesHandler from '../Data/MessagesHandler';
 import AppTextInput from '../../components/AppTextInput';
-import ActModal from '../../components/Acts/ActModal';
 
 function InputModal({ act, errorMsg, successMsg }) {
 	const finished = useContext(FinishedModalActContext);
 	const onSend = (text) => {
 		if (text) {
-			handleAct(
-				act(text).then(() => true),
-				errorMsg,
-				successMsg
-			).then(finished);
+			finished(
+				handleAct(
+					act(text).then(() => true),
+					errorMsg,
+					successMsg
+				)
+			);
 		}
 	};
 	return (
-		<ActModal style={{ paddingTop: 100 }}>
-			<AppTextInput onSend={onSend} icon={'send'} width="70%">
-				A cute message!
-			</AppTextInput>
-		</ActModal>
+		<AppTextInput onSend={onSend} icon={'send'} width="70%">
+			A cute message!
+		</AppTextInput>
 	);
 }
 InputModal.propTypes = {

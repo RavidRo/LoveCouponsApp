@@ -5,10 +5,15 @@ import PropTypes from 'prop-types';
 import colors from '../../config/colors';
 
 export default function ActModal({ children }) {
+	const hasChildren = Array.isArray(children)
+		? children.some((value) => value)
+		: children;
 	return (
-		<Modal animationType={'fade'} transparent>
-			<View style={styles.container}>{children}</View>
-		</Modal>
+		hasChildren && (
+			<Modal animationType={'fade'} transparent>
+				<View style={styles.container}>{children}</View>
+			</Modal>
+		)
 	);
 }
 const styles = StyleSheet.create({
@@ -20,5 +25,5 @@ const styles = StyleSheet.create({
 	},
 });
 ActModal.propTypes = {
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node,
 };
