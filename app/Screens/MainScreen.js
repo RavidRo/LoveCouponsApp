@@ -5,15 +5,13 @@ import PropTypes from 'prop-types';
 import Screen from '../components/Screen';
 import CouponCounter from '../components/CouponCounter';
 import Timer from '../components/Timer';
-import state from '../BusinessLayer/Data/StateHandler';
 import coupons from '../BusinessLayer/Data/CouponsHandler';
 import settings from '../config/settings';
-import MainPicker from '../components/MainPicker';
+import ActsPicker from '../components/Acts/ActsPicker';
 import { useState } from 'react';
 import stateHandler from '../BusinessLayer/Data/StateHandler';
 import { useEffect } from 'react';
 import useInterval from '../Hooks/useInterval';
-import acts from '../BusinessLayer/Acts';
 
 export default function MainScreen({ navigation }) {
 	// Time control logic:
@@ -45,14 +43,14 @@ export default function MainScreen({ navigation }) {
 
 	const addPoints = (pointsToAdd) => {
 		counter.current.addPoints(pointsToAdd);
-		state.addPoints(pointsToAdd);
+		stateHandler.addPoints(pointsToAdd);
 	};
 
 	const getCoupon = () => {
 		if (counter.current.isFull()) {
 			coupons.createNewCoupon(); //Creating the new coupon
 			counter.current.usePoints(); //Remove the points from the points counter
-			state.removePoints(settings.pointsForCoupon); //Save the new points value in the database
+			stateHandler.removePoints(settings.pointsForCoupon); //Save the new points value in the database
 		}
 	};
 
@@ -66,8 +64,7 @@ export default function MainScreen({ navigation }) {
 				</TouchableHighlight>
 			</View>
 			<View style={styles.pickerBtnContainer}>
-				<MainPicker
-					items={acts}
+				<ActsPicker
 					onSelect={(points) => {
 						if (timeLeft <= 0 && points > 0) {
 							addPoints(points);

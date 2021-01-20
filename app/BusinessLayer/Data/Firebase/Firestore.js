@@ -23,13 +23,15 @@ function getDocRef(collection, docId) {
 // *--------------------------Public Functions--------------------------
 
 /**
- * Adds a document to a specific collection
- * @param {string} collection - The collection to add the document
+ * Adds a document to a specific collection.
+ * If the collection doesn't exists, it will get created.
+ * @param {string} collectionPath - A slash separated path to a collection
  * @param {object} data - The document data
  * @param {string} docId - Non empty string representing the id. If none given then a random one created.
+ * @returns {Promise<void>}
  */
-function addDocToCollection(collection, data, docId = null) {
-	const collectionRef = db.collection(collection);
+function addDocToCollection(collectionPath, data, docId = null) {
+	const collectionRef = db.collection(collectionPath);
 	const getDocFunc = collectionRef.doc;
 	const docRef = docId
 		? getDocFunc.call(collectionRef, docId)
