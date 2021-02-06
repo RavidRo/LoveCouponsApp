@@ -9,6 +9,7 @@ import Acts from '../../BusinessLayer/Acts/Acts';
 import { FinishedModalActContext } from '../../BusinessLayer/Acts/ActsLogic';
 import Loading from '../Loading';
 import ActModal from './ActModal';
+import TimerButton from '../TimerButton';
 
 // TODO: Extract this to another file
 export default function ActsPicker({ onSelect }) {
@@ -30,7 +31,7 @@ export default function ActsPicker({ onSelect }) {
 						});
 					}
 				}}
-				CostumePickerButton={HeartButton}
+				CostumePickerButton={TimerButton}
 			/>
 			<ActModal>
 				{modalItem && (

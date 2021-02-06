@@ -1,4 +1,5 @@
 export default {
+	unknowngrey: '#ECE2E1',
 	white: '#fff',
 	light: '#eee',
 	medium: '#888',

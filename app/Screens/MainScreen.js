@@ -12,6 +12,7 @@ import { useState } from 'react';
 import stateHandler from '../BusinessLayer/Data/StateHandler';
 import { useEffect } from 'react';
 import useInterval from '../Hooks/useInterval';
+import colors from '../config/colors';
 
 export default function MainScreen({ navigation }) {
 	// Time control logic:
@@ -80,7 +81,7 @@ export default function MainScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: colors.unknowngrey,
 		alignItems: 'center',
 	},
 	timer: {
@@ -92,6 +93,8 @@ const styles = StyleSheet.create({
 	},
 	pickerBtnContainer: {
 		flex: 0.06,
+		width: '100%',
+		alignItems: 'center'
 	},
 });
 
