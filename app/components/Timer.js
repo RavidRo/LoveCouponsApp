@@ -7,12 +7,13 @@ import AppText from './AppText';
 import Time from '../BusinessLayer/DataTypes/Time';
 import Heart from './Heart';
 import settings from '../config/settings';
+import colors from '../config/colors';
 
 const barWidth = '70%';
 const barHeight = 40;
-const filledColor = 'pink';
-const unfilledColor = 'white';
-const borderColor = 'red';
+const filledColor = colors.pink;
+const unfilledColor = colors.white;
+const borderColor = colors.red;
 
 const timeObject = new Time();
 

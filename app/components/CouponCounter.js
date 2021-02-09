@@ -17,7 +17,11 @@ export default class CouponCounter extends Component {
 			animationDuration: props.animationDuration || 0.01, //Seconds per point gained
 		};
 		// Synchronize state with database
-		stateHandler.getPoints().then((points) => this.addPoints(points));
+		stateHandler
+			.getPoints()
+			.then((points) =>
+				this.setState({ points, pointsDisplaying: points })
+			);
 	}
 	// !This is a private method and should not be used externally
 	// !the actual points will not be synchronized with the animation

@@ -19,6 +19,10 @@ function initialStateObject() {
 	Firestore.addDocToCollection(stateCollectionName, state, stateDocumentId);
 }
 
+// *--------------------------Public Functions--------------------------
+/**
+ * Loads all the data from the server locally
+ */
 async function loadState() {
 	if (!state) {
 		const resultState = await Firestore.getDoc(
@@ -29,7 +33,6 @@ async function loadState() {
 	}
 }
 
-// *--------------------------Public Functions--------------------------
 // ! I'm not sure that "lastTimeEarned" is of type Date
 /**
  * Retrieves the user state from the database or cache
@@ -101,4 +104,5 @@ export default {
 	getLastTimeSent,
 	addPoints,
 	removePoints,
+	loadState,
 };
