@@ -4,42 +4,13 @@ import PropTypes from 'prop-types';
 
 import Screen from '../components/Screen';
 import CouponCounter from '../components/CouponCounter';
-import Timer from '../components/Timer';
 import coupons from '../BusinessLayer/Data/CouponsHandler';
 import settings from '../config/settings';
 import ActsPicker from '../components/Acts/ActsPicker';
-import { useState } from 'react';
 import stateHandler from '../BusinessLayer/Data/StateHandler';
-import { useEffect } from 'react';
-import useInterval from '../Hooks/useInterval';
 import colors from '../config/colors';
 
 export default function MainScreen({ navigation }) {
-	// Time control logic:
-	const [timeLeft, setTimeLeft] = useState(settings.getPointsEvery); // 1) Set the initial time to 0
-	useInterval(() => {
-		if (timeLeft > 0) {
-			setTimeLeft(timeLeft - 1);
-		}
-	}, 1000); // 2) Remove 1 second every second
-	// 3) Synchronize with database
-	useEffect(() => {
-		stateHandler.getLastTimeSent().then((time) => {
-			if (time) {
-				const timeSince = Math.round(
-					new Date().getTime() / 1000 - time.seconds
-				);
-				const timeLeft = Math.max(
-					settings.getPointsEvery - timeSince,
-					0
-				);
-				setTimeLeft(timeLeft);
-			} else {
-				setTimeLeft(0);
-			}
-		});
-	}, []);
-
 	const counter = useRef(null);
 
 	const addPoints = (pointsToAdd) => {
@@ -58,7 +29,6 @@ export default function MainScreen({ navigation }) {
 	return (
 		<Screen style={styles.container}>
 			<Button title="=>" onPress={() => navigation.openDrawer()} />
-			<Timer style={styles.timer} timeLeft={timeLeft} />
 			<View style={styles.couponContainer}>
 				<TouchableHighlight onPress={getCoupon}>
 					<CouponCounter ref={counter} />
@@ -67,9 +37,8 @@ export default function MainScreen({ navigation }) {
 			<View style={styles.pickerBtnContainer}>
 				<ActsPicker
 					onSelect={(points) => {
-						if (timeLeft <= 0 && points > 0) {
+						if (points > 0) {
 							addPoints(points);
-							setTimeLeft(settings.getPointsEvery);
 						}
 					}}
 				/>
@@ -84,17 +53,14 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.unknowngrey,
 		alignItems: 'center',
 	},
-	timer: {
-		marginTop: '20%',
-		flex: 0.25,
-	},
 	couponContainer: {
-		flex: 0.49,
+		marginTop: '50%',
+		flex: 0.6,
 	},
 	pickerBtnContainer: {
-		flex: 0.06,
+		flex: 0.2,
 		width: '100%',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 });
 

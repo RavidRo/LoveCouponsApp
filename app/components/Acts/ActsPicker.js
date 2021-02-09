@@ -3,18 +3,29 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import AppPicker from '../Picker/AppPicker';
-import HeartButton from '../HeartButton';
 import PickerItem from '../Picker/PickerItem';
 import Acts from '../../BusinessLayer/Acts/Acts';
 import { FinishedModalActContext } from '../../BusinessLayer/Acts/ActsLogic';
 import Loading from '../Loading';
 import ActModal from './ActModal';
 import TimerButton from '../TimerButton';
+import useTimer from '../../Hooks/useTimer';
+import settings from '../../config/settings';
 
-// TODO: Extract this to another file
 export default function ActsPicker({ onSelect }) {
 	const [modalItem, setModalItem] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [timeLeft, setTimeLeft] = useTimer();
+
+	const act = (promise, points) => {
+		setLoading(true);
+		promise.then((response) => {
+			setLoading(false);
+			onSelect(response && timeLeft == 0 ? points : 0);
+			setTimeLeft(settings.getPointsEvery);
+		});
+	};
+
 	return (
 		<>
 			<AppPicker
@@ -24,25 +35,18 @@ export default function ActsPicker({ onSelect }) {
 					if (item.modal) {
 						setModalItem(item);
 					} else {
-						setLoading(true);
-						item.act().then((response) => {
-							setLoading(false);
-							onSelect(response ? item.points : 0);
-						});
+						act(item.act(), item.points);
 					}
 				}}
 				CostumePickerButton={TimerButton}
+				timeLeft={timeLeft}
 			/>
 			<ActModal>
 				{modalItem && (
 					<FinishedModalActContext.Provider
 						value={(actPromise) => {
-							setLoading(true);
 							setModalItem(null);
-							actPromise.then((success) => {
-								setLoading(false);
-								onSelect(success ? modalItem.points : 0);
-							});
+							act(actPromise, modalItem.points);
 						}}
 					>
 						<modalItem.act />

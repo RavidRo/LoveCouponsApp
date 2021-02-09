@@ -20,8 +20,7 @@
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./app/assets/images/adaptive-icon.png",
-				"backgroundColor": "#FFFFFF",
-				"softwareKeyboardLayoutMode": "pan"
+				"backgroundColor": "#FFFFFF"
 			}
 		},
 		"web": {
