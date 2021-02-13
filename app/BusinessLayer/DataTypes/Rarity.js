@@ -28,7 +28,7 @@ export default class Rarity {
 		 * The list of texts that a coupon of this rarity can have.
 		 * @private
 		 * @type {String[]}
-=		 */
+		 =		 */
 		this.texts = [];
 		Rarity.instances.push(this);
 	}

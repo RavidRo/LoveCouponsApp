@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StateHandler from '../BusinessLayer/Data/StateHandler';
 import couponsConfig from '../config/couponsConfig';
 
@@ -6,7 +6,10 @@ import couponsConfig from '../config/couponsConfig';
 export default function useInit() {
 	const [loaded, setLoaded] = useState(false);
 	// Set the rarities witch are set locally at the moment
-	couponsConfig.init();
-	StateHandler.loadState().then(() => setLoaded(true));
+	useEffect(() => {
+		couponsConfig.init();
+		StateHandler.loadState().then(() => setLoaded(true));
+	}, []);
+
 	return loaded;
 }

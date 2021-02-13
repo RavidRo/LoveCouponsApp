@@ -2,7 +2,7 @@ export default {
 	unknowngrey: '#ECE2E1',
 	white: '#fff',
 	light: '#eee',
-	medium: '#888',
+	medium: '#555',
 	medium_04: 'rgba(128, 128, 128, 0.6)',
 	black: '#000',
 	red: '#f0265d',

@@ -55,10 +55,7 @@ export default class Coupon {
 
 	// The reverse function for "toObject"
 	static fromObject(couponObject, saved = true) {
-		return new Coupon(
-			Rarity.getRarity(couponObject.rarityId),
-			couponObject.text,
-			saved
-		);
+		const rarity = Rarity.getRarity(couponObject.rarityId);
+		return new Coupon(rarity, couponObject.text, saved);
 	}
 }

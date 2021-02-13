@@ -1,67 +1,67 @@
 import React, { Component } from 'react';
-import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
+import eases from 'eases';
 
 import CouponSVG from './SVG/CouponSVG';
 import settings from '../config/settings';
 import stateHandler from '../BusinessLayer/Data/StateHandler';
 
 const maxPoints = settings.pointsForCoupon;
+
 export default class CouponCounter extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			pointsAnim: new Animated.Value(0), //The animation
-			points: 0, //The actual points in a given time
-			pointsDisplaying: 0, //The points displaying to the user
-			animationDuration: props.animationDuration || 0.01, //Seconds per point gained
+			value: 0,
 		};
+		this.stop = true;
+		this.start = 0;
+		this.end = 0;
+		this.duration = (props.animationDuration || 3) * 1000;
 		// Synchronize state with database
-		stateHandler
-			.getPoints()
-			.then((points) =>
-				this.setState({ points, pointsDisplaying: points })
-			);
-	}
-	// !This is a private method and should not be used externally
-	// !the actual points will not be synchronized with the animation
-	animateTo(valueTo) {
-		// I'm stopping the current animation before starting a new one
-		this.state.pointsAnim.stopAnimation((currentValue) => {
-			// const currentValue = this.state.pointsDisplaying;
-			const valueChangeBy = Math.abs(currentValue - valueTo);
-
-			// Im tracking the animation value to show the user a number of the value on the screen
-			this.state.pointsAnim.addListener((progress) => {
-				this.setState({ pointsDisplaying: progress.value });
-			});
-
-			Animated.timing(this.state.pointsAnim, {
-				toValue: valueTo,
-				duration: valueChangeBy * 1000 * this.state.animationDuration,
-				useNativeDriver: false,
-			}).start();
+		stateHandler.getPoints().then((points) => {
+			this.start = points;
+			this.end = points;
+			this.setState({ value: points });
 		});
+	}
+
+	componentDidMount() {
+		requestAnimationFrame(this.animate.bind(this));
+	}
+
+	animate() {
+		requestAnimationFrame(this.animate.bind(this));
+		if (!this.stop) this.draw();
+	}
+
+	draw() {
+		const { start, end } = this;
+
+		const time = this.duration;
+		const now = Date.now();
+		if (now - this.startTime >= time) this.stop = true;
+		const percentage = Math.min((now - this.startTime) / time, 1);
+		const easeVal = eases['cubicOut'](percentage);
+		const value = start + (end - start) * easeVal;
+
+		this.setState({ value });
 	}
 
 	addPoints(addedPoints) {
-		const newPoints = this.state.points + addedPoints;
-		this.setState({
-			points: newPoints,
-		});
-		this.animateTo(newPoints);
+		this.startTime = Date.now();
+		this.start = this.end;
+		this.end += addedPoints;
+		this.stop = false;
 	}
 
 	isFull() {
-		return this.state.pointsDisplaying >= maxPoints;
+		return this.end >= maxPoints;
 	}
+
 	usePoints() {
 		if (this.isFull()) {
-			const newValue = this.state.points - maxPoints;
-			this.animateTo(newValue);
-			this.setState({
-				points: newValue,
-			});
+			this.addPoints(maxPoints * -1);
 		} else {
 			throw Error("Can't use points when counter is not full");
 		}
@@ -70,7 +70,7 @@ export default class CouponCounter extends Component {
 	render() {
 		return (
 			<CouponSVG
-				currentPoints={Math.floor(this.state.pointsDisplaying)}
+				currentPoints={this.state.value.toFixed(0)}
 				maxPoints={maxPoints}
 			/>
 		);
