@@ -21,8 +21,10 @@ export default function ActsPicker({ onSelect }) {
 		setLoading(true);
 		promise.then((response) => {
 			setLoading(false);
-			onSelect(response && timeLeft == 0 ? points : 0);
-			setTimeLeft(settings.getPointsEvery);
+			if (response) {
+				onSelect(timeLeft == 0 ? points : 0);
+				setTimeLeft(settings.getPointsEvery);
+			}
 		});
 	};
 

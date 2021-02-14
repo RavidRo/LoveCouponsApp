@@ -61,7 +61,12 @@ function saveCoupon(coupon) {
 	if (cache.loaded) {
 		cache.coupons = [...cache.coupons, coupon];
 	}
-	return Firestore.addDocToCollection(collectionName, coupon.toObject());
+	const couponToSave = { ...coupon.toObject(), used: false };
+	return Firestore.addDocToCollection(
+		collectionName,
+		couponToSave,
+		couponToSave.id
+	);
 }
 
 // * ---------------------------------------- public functions ----------------------------------------
@@ -99,8 +104,15 @@ function listenToChange(callback) {
 async function load() {
 	if (!cache.loaded) {
 		const docs = await Firestore.getCollection(collectionName);
-		cache.coupons = docs.map(Coupon.fromObject);
+		cache.coupons = docs
+			.filter((coupon) => !coupon.used)
+			.map(Coupon.fromObject);
 	}
+}
+
+async function useCoupon(couponId) {
+	cache.coupons = cache.coupons.filter((coupon) => coupon.id !== couponId);
+	return Firestore.updateDocument(collectionName, couponId, { used: true });
 }
 
 export default {
@@ -108,4 +120,5 @@ export default {
 	listenToChange,
 	createNewCoupon,
 	load,
+	useCoupon,
 };

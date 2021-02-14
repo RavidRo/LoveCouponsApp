@@ -14,6 +14,7 @@ export default function HeartButton({
 	text,
 	circled = false,
 	size = 100,
+	...otherProps
 }) {
 	const circledStyles =
 		circled &&
@@ -56,7 +57,7 @@ export default function HeartButton({
 					]}
 				>
 					<AppText style={styles.text}>{text}</AppText>
-					<Heart size={size / 2} />
+					<Heart size={size / 2} {...otherProps} />
 				</View>
 			</TouchableNativeFeedback>
 		</View>

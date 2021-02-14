@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 
 import MediaHandler from '../Data/MediaHandler';
 import { FinishedModalActContext, handleAct } from './ActsLogic';
+import { useEffect } from 'react';
 
 // * ------------------------- SEND MEDIA (Video/Photo) ACT -------------------------
 export const mediaTypes = Object.freeze({
@@ -34,7 +35,11 @@ export async function sendMediaAct(mediaType) {
 			: ImagePicker.launchImageLibraryAsync(imageOptions));
 
 		if (!result.cancelled) {
-			await MediaHandler.uploadImage(result.uri);
+			if (mediaType === mediaTypes.video) {
+				await MediaHandler.uploadVideo(result.uri);
+			} else {
+				await MediaHandler.uploadImage(result.uri);
+			}
 			return true;
 		}
 	}
@@ -66,10 +71,19 @@ export function SendPhotoActModal() {
 	);
 }
 
-export function sendVideoAct() {
-	return handleAct(
-		sendMediaAct(mediaTypes.video),
-		'An error occurred while trying to send the video',
-		'Video sent!'
+export function SendVideoActModal() {
+	const finished = useContext(FinishedModalActContext);
+	useEffect(
+		() =>
+			finished(
+				handleAct(
+					sendMediaAct(mediaTypes.video),
+					'An error occurred while trying to send the video',
+					'Video sent!'
+				)
+			),
+		[]
 	);
+
+	return <></>;
 }

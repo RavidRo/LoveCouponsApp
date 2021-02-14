@@ -1,7 +1,8 @@
 import Rarity from './Rarity';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class Coupon {
-	constructor(rarity, text, saved = false) {
+	constructor(rarity, text, saved = false, id = uuidv4()) {
 		this.rarity = rarity;
 		if (!rarity) {
 			throw new Error(
@@ -13,6 +14,7 @@ export default class Coupon {
 		// ?Maybe you can give each coupon an id instead of tracking if is saved or not. Firebase will then handle this shit.
 		// If the coupon is loaded from the database I don't want to be able to save a new copy of it(each one is unique)
 		this.saved = saved;
+		this.id = id;
 	}
 
 	// Creates a random new coupon!
@@ -50,12 +52,13 @@ export default class Coupon {
 		return {
 			rarityId: this.rarity.id,
 			text: this.text,
+			id: this.id,
 		};
 	}
 
 	// The reverse function for "toObject"
 	static fromObject(couponObject, saved = true) {
 		const rarity = Rarity.getRarity(couponObject.rarityId);
-		return new Coupon(rarity, couponObject.text, saved);
+		return new Coupon(rarity, couponObject.text, saved, couponObject.id);
 	}
 }
