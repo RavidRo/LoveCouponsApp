@@ -42,6 +42,7 @@ export default function ActsPicker({ onSelect }) {
 				}}
 				CostumePickerButton={TimerButton}
 				timeLeft={timeLeft}
+				numberOfColumns={2}
 			/>
 			<ActModal>
 				{modalItem && (

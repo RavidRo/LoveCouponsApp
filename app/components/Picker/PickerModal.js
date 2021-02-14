@@ -1,7 +1,14 @@
 import React from 'react';
-import { Button, Modal, FlatList, View } from 'react-native';
+import {
+	Modal,
+	FlatList,
+	View,
+	StyleSheet,
+	TouchableNativeFeedback,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../../config/colors';
+import AppText from '../AppText';
 
 export default function PickerModal({
 	visible,
@@ -20,18 +27,23 @@ export default function PickerModal({
 					flex: 1,
 				}}
 			>
-				<Button title="Close" onPress={onClose} />
+				<TouchableNativeFeedback onPress={onClose}>
+					<View style={styles.button}>
+						<AppText weight={'medium'}>Close</AppText>
+					</View>
+				</TouchableNativeFeedback>
 				<FlatList
 					data={data}
 					keyExtractor={(_, index) => index.toString()}
 					numColumns={numberOfColumns}
 					renderItem={({ item }) => (
 						<PickerItemComponent
-							label={item.label}
+							{...item}
 							onPress={() => {
 								onClose();
 								onSelectItem(item);
 							}}
+							width={`${100 / numberOfColumns}%`}
 						/>
 					)}
 				/>
@@ -40,9 +52,15 @@ export default function PickerModal({
 	);
 }
 
-// const styles = StyleSheet.create({
-// 	container: {},
-// });
+const styles = StyleSheet.create({
+	button: {
+		alignItems: 'center',
+		padding: 10,
+		// borderWidth: 1,
+		backgroundColor: colors.blue,
+		borderColor: colors.blue,
+	},
+});
 
 PickerModal.propTypes = {
 	visible: PropTypes.bool.isRequired,
