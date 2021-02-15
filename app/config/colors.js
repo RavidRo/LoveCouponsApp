@@ -7,6 +7,7 @@ export default {
 	black: '#000',
 	red: '#f0265d',
 	pink: '#fcd1d1',
+	pink_opacity: 'rgba(252, 209, 209, 0.6)',
 	cyan: '#d3e0dc',
 	blue: '#aee1e1',
 	rarity: {
