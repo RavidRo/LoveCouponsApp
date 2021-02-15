@@ -4,14 +4,19 @@ import PropTypes from 'prop-types';
 
 import Screen from '../components/Screen';
 import ActsPicker from '../components/Acts/ActsPicker';
-import colors from '../config/colors';
 import CouponButton from '../components/CouponButton';
+import colors from '../config/colors';
 
 export default function MainScreen({ navigation }) {
 	const counter = useRef(null);
 
 	return (
-		<Screen style={styles.container}>
+		<Screen
+			style={styles.container}
+			backgroundImage={require('../assets/images/background.jpg')}
+			backgroundImageOpacity={0.25}
+			backgroundColor={colors.unknowngrey}
+		>
 			<Button title="=>" onPress={() => navigation.openDrawer()} />
 			<CouponButton ref={counter} style={styles.couponContainer} />
 			<View style={styles.pickerBtnContainer}>
@@ -30,7 +35,7 @@ export default function MainScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: colors.unknowngrey,
+		// backgroundColor: colors.unknowngrey,
 		alignItems: 'center',
 	},
 	couponContainer: {

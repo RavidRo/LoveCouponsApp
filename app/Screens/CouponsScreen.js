@@ -21,7 +21,7 @@ export default function CouponsScreen() {
 	return (
 		<>
 			<Screen style={styles.container}>
-				<AppText>Your Coupons:</AppText>
+				<AppText weight={'medium'}>Your Coupons</AppText>
 				<FlatList
 					data={displayingCoupons}
 					renderItem={({ item }) => (
