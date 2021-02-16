@@ -8,14 +8,17 @@ import CouponsHandler from '../BusinessLayer/Data/CouponsHandler';
 import colors from '../config/colors';
 import ActModal from '../components/Acts/ActModal';
 import HeartButton from '../components/HeartButton';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export default function CouponsScreen() {
 	const [displayingCoupons, setDisplayingCoupons] = useState([]);
 	const [couponUsing, setCouponUsing] = useState(null);
+	const [refreshing, setRefreshing] = useState(true);
+	const { isInternetReachable } = useNetInfo();
 	// TODO: 1) Handle errors correctly 2) Add some kind of loading indicator 3) Don't put the initial loading here
 	useEffect(() => {
 		CouponsHandler.listenToChange(setDisplayingCoupons);
-		CouponsHandler.load();
+		CouponsHandler.load().finally(() => setRefreshing(false));
 	}, []);
 
 	return (
@@ -34,6 +37,13 @@ export default function CouponsScreen() {
 						</TouchableOpacity>
 					)}
 					keyExtractor={(_, index) => index.toString()}
+					onRefresh={() => {
+						setRefreshing(true);
+						CouponsHandler.load().finally(() =>
+							setRefreshing(false)
+						);
+					}}
+					refreshing={refreshing}
 				/>
 			</Screen>
 			{couponUsing && (
@@ -54,8 +64,12 @@ export default function CouponsScreen() {
 
 						<HeartButton
 							onPress={() => {
-								setCouponUsing(null);
-								CouponsHandler.useCoupon(couponUsing.id);
+								if (isInternetReachable) {
+									setCouponUsing(null);
+									CouponsHandler.useCoupon(couponUsing.id);
+								} else {
+									alert('No internet connection...');
+								}
 							}}
 							text={'YAY!'}
 						/>
@@ -78,7 +92,7 @@ const styles = StyleSheet.create({
 		marginVertical: '-10%',
 	},
 	couponText: {
-		left: '30%',
+		left: '38%',
 		width: '52%',
 	},
 	couponModalText: {

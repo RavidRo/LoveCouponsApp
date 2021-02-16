@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Modal, StyleSheet, View } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
 

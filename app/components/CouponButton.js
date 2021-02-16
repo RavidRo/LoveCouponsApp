@@ -37,7 +37,13 @@ export default class CouponButton extends Component {
 	render() {
 		return (
 			<View style={this.props.style}>
-				<TouchableOpacity onPress={() => this.getCoupon()}>
+				<TouchableOpacity
+					onPress={
+						this.props.isInternetReachable
+							? () => this.getCoupon()
+							: undefined
+					}
+				>
 					<CouponCounter ref={this.counter_ref} />
 				</TouchableOpacity>
 				{this.state.modal && (
@@ -89,4 +95,5 @@ const styles = StyleSheet.create({
 
 CouponButton.propTypes = {
 	style: PropTypes.object,
+	isInternetReachable: PropTypes.bool.isRequired,
 };

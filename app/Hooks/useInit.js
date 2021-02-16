@@ -8,7 +8,7 @@ export default function useInit() {
 	// Set the rarities witch are set locally at the moment
 	useEffect(() => {
 		couponsConfig.init();
-		StateHandler.loadState().then(() => setLoaded(true));
+		StateHandler.loadState().finally(() => setLoaded(true));
 	}, []);
 
 	return loaded;

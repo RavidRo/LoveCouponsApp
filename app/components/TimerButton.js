@@ -5,13 +5,7 @@ import Timer from './Timer';
 
 export default function TimerButton({ onPress, timeLeft }) {
 	return (
-		<TouchableNativeFeedback
-			onPress={() => {
-				if (timeLeft == 0) {
-					onPress();
-				}
-			}}
-		>
+		<TouchableNativeFeedback onPress={() => onPress()}>
 			<View style={styles.container}>
 				<Timer timeLeft={timeLeft} />
 			</View>

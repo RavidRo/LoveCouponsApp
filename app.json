@@ -1,27 +1,27 @@
 {
 	"expo": {
-		"name": "ILoveYou",
-		"slug": "ILoveYou",
+		"name": "Love Coupons",
+		"slug": "LoveCoupons",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./app/assets/images/icon.png",
 		"splash": {
 			"image": "./app/assets/images/splash.png",
 			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
+			"backgroundColor": "#FFFFFF"
 		},
 		"updates": {
 			"fallbackToCacheTimeout": 0
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.ravidrom.lovecoupons",
+			"buildNumber": "1.0.0"
 		},
 		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./app/assets/images/adaptive-icon.png",
-				"backgroundColor": "#FFFFFF"
-			}
+			"package": "com.ravidrom.lovecoupons",
+			"versionCode": 1
 		},
 		"web": {
 			"favicon": "./app/assets/images/favicon.png"

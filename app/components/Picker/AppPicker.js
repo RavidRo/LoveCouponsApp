@@ -53,6 +53,6 @@ AppPicker.propTypes = {
 	width: PropTypes.string,
 	PickerItemComponent: PropTypes.elementType,
 	selectedItem: PropTypes.string,
-	onSelectItem: PropTypes.func.isRequired,
+	onSelectItem: PropTypes.func,
 	CostumePickerButton: PropTypes.elementType,
 };

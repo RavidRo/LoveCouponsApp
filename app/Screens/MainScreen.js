@@ -7,9 +7,11 @@ import ActsPicker from '../components/Acts/ActsPicker';
 import CouponButton from '../components/CouponButton';
 import colors from '../config/colors';
 import DrawerButton from '../components/DrawerButton';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export default function MainScreen({ navigation }) {
 	const counter = useRef(null);
+	const { isInternetReachable } = useNetInfo();
 
 	return (
 		<Screen
@@ -19,7 +21,11 @@ export default function MainScreen({ navigation }) {
 			backgroundColor={colors.unknowngrey}
 		>
 			<DrawerButton onPress={() => navigation.openDrawer()} />
-			<CouponButton ref={counter} style={styles.couponContainer} />
+			<CouponButton
+				ref={counter}
+				style={styles.couponContainer}
+				isInternetReachable={isInternetReachable}
+			/>
 			<View style={styles.pickerBtnContainer}>
 				<ActsPicker
 					onSelect={(points) => {

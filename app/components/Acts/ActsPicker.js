@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import AppPicker from '../Picker/AppPicker';
 import PickerItem from '../Picker/PickerItem';
@@ -16,6 +17,7 @@ export default function ActsPicker({ onSelect }) {
 	const [modalItem, setModalItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [timeLeft, setTimeLeft] = useTimer();
+	const { isInternetReachable } = useNetInfo();
 
 	const act = (promise, points) => {
 		setLoading(true);
@@ -23,7 +25,9 @@ export default function ActsPicker({ onSelect }) {
 			setLoading(false);
 			if (response) {
 				onSelect(timeLeft == 0 ? points : 0);
-				setTimeLeft(settings.getPointsEvery);
+				if (timeLeft == 0) {
+					setTimeLeft(settings.getPointsEvery);
+				}
 			}
 		});
 	};
@@ -33,13 +37,17 @@ export default function ActsPicker({ onSelect }) {
 			<AppPicker
 				PickerItemComponent={PickerItem}
 				items={Acts}
-				onSelectItem={(item) => {
-					if (item.modal) {
-						setModalItem(item);
-					} else {
-						act(item.act(), item.points);
-					}
-				}}
+				onSelectItem={
+					isInternetReachable
+						? (item) => {
+								if (item.modal) {
+									setModalItem(item);
+								} else {
+									act(item.act(), item.points);
+								}
+						  }
+						: undefined
+				}
 				CostumePickerButton={TimerButton}
 				timeLeft={timeLeft}
 				numberOfColumns={2}

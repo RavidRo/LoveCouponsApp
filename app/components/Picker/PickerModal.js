@@ -42,10 +42,13 @@ export default function PickerModal({
 					renderItem={({ item }) => (
 						<PickerItemComponent
 							{...item}
-							onPress={() => {
-								onClose();
-								onSelectItem(item);
-							}}
+							onPress={
+								onSelectItem &&
+								(() => {
+									onClose();
+									onSelectItem(item);
+								})
+							}
 							width={`${100 / numberOfColumns}%`}
 						/>
 					)}
@@ -78,6 +81,6 @@ PickerModal.propTypes = {
 	).isRequired,
 	numberOfColumns: PropTypes.number,
 	PickerItemComponent: PropTypes.elementType.isRequired,
-	onSelectItem: PropTypes.func.isRequired,
+	onSelectItem: PropTypes.func,
 	onClose: PropTypes.func.isRequired,
 };

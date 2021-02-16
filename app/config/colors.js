@@ -2,6 +2,7 @@ export default {
 	unknowngrey: '#ECE2E1',
 	white: '#fff',
 	light: '#eee',
+	light_medium: '#bbb',
 	medium: '#555',
 	medium_04: 'rgba(128, 128, 128, 0.7)',
 	dark: '#333333',

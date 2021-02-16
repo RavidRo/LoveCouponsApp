@@ -1,5 +1,5 @@
 import * as ImagePicker from 'expo-image-picker';
-import { Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
 
 import MediaHandler from '../Data/MediaHandler';
