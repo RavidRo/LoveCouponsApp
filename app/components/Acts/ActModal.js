@@ -34,14 +34,17 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: colors.medium_04,
 		alignItems: 'center',
+		justifyContent: 'center',
+		flexDirection: 'row-reverse',
+		// paddingTop: '50%',
 	},
 	cancelButton: {
 		backgroundColor: colors.pink,
 	},
 	buttonContainer: {
 		position: 'absolute',
-		bottom: 0,
-		marginBottom: '40%',
+		bottom: '30%',
+		alignSelf: 'flex-end',
 	},
 	cancelButtonText: {
 		fontSize: 24,
