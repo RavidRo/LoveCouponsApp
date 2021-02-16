@@ -32,6 +32,9 @@ export default function PickerModal({
 						<AppText weight={'medium'}>Close</AppText>
 					</View>
 				</TouchableNativeFeedback>
+				<AppText weight={'medium'} style={styles.header}>
+					Send your lover a...
+				</AppText>
 				<FlatList
 					data={data}
 					keyExtractor={(_, index) => index.toString()}
@@ -59,6 +62,10 @@ const styles = StyleSheet.create({
 		// borderWidth: 1,
 		backgroundColor: colors.blue,
 		borderColor: colors.blue,
+	},
+	header: {
+		alignSelf: 'center',
+		paddingVertical: 10,
 	},
 });
 

@@ -44,7 +44,7 @@ export default function ActsPicker({ onSelect }) {
 				timeLeft={timeLeft}
 				numberOfColumns={2}
 			/>
-			<ActModal>
+			<ActModal cancel={modalItem && (() => setModalItem(null))}>
 				{modalItem && (
 					<FinishedModalActContext.Provider
 						value={(actPromise) => {

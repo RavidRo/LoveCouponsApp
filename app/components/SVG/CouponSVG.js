@@ -18,7 +18,6 @@ export default function CouponSVG({
 	maxPoints = 100,
 	textColor = colors.dark,
 	style,
-	// backgroundColor = colors.unknowngrey,
 	mainColor = colors.dark,
 	secondaryColor = colors.dark,
 	borderColor = colors.dark,
@@ -39,7 +38,6 @@ export default function CouponSVG({
 		back_a,
 	] = colorTransition.map(([start, end]) => calculate(start, end, progress));
 	const backgroundColor = `rgba(${back_r}, ${back_g}, ${back_b}, ${back_a})`;
-	console.log(backgroundColor);
 
 	const svg = `
 	<svg width="299" height="245" xmlns="http://www.w3.org/2000/svg">

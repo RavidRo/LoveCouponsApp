@@ -1,10 +1,12 @@
 import * as ImagePicker from 'expo-image-picker';
-import { Button } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
 
 import MediaHandler from '../Data/MediaHandler';
 import { FinishedModalActContext, handleAct } from './ActsLogic';
 import { useEffect } from 'react';
+import AppButton from '../../components/AppButton';
+import colors from '../../config/colors';
 
 // * ------------------------- SEND MEDIA (Video/Photo) ACT -------------------------
 export const mediaTypes = Object.freeze({
@@ -59,17 +61,32 @@ export function SendPhotoActModal() {
 
 	return (
 		<>
-			<Button
+			<AppButton
 				onPress={getOnPress(mediaTypes.cameraImage)}
 				title={'With Camera'}
+				style={styles.button}
+				textStyle={styles.buttonText}
 			/>
-			<Button
+			<AppButton
 				onPress={getOnPress(mediaTypes.libraryImage)}
 				title={'From Library'}
+				style={styles.button}
+				textStyle={styles.buttonText}
 			/>
 		</>
 	);
 }
+const styles = StyleSheet.create({
+	button: {
+		backgroundColor: colors.cyan,
+		marginVertical: 10,
+	},
+	buttonText: {
+		fontSize: 25,
+		padding: 5,
+		color: colors.dark,
+	},
+});
 
 export function SendVideoActModal() {
 	const finished = useContext(FinishedModalActContext);
