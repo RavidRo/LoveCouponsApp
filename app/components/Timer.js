@@ -13,7 +13,7 @@ const barWidth = '70%';
 const barHeight = 40;
 const filledColor = colors.pink;
 const unfilledColor = colors.white;
-const borderColor = colors.red;
+const borderColor = colors.medium_04;
 
 const timeObject = new Time();
 
@@ -37,7 +37,7 @@ export default class Timer extends Component {
 				<View style={styles.container}>
 					<Heart style={styles.heart} />
 					<View style={styles.textContainer}>
-						<AppText style={styles.counterText}>
+						<AppText weight={'medium'} style={styles.counterText}>
 							{getText(this.props.timeLeft)}
 						</AppText>
 					</View>
@@ -71,7 +71,9 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		zIndex: 1,
 	},
-	counterText: {},
+	counterText: {
+		color: colors.dark,
+	},
 	heart: {
 		position: 'absolute',
 		zIndex: 1,
