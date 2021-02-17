@@ -19,11 +19,11 @@ export default class Rarity {
 	 * @param {String} color A string representing a color. e.g. "red" or "#f12".
 	 * @param {Number} probability A float representing the probability to get a coupon of this rarity when getting a new coupon.
 	 */
-	constructor(name, color, probability) {
+	constructor(name, color, probability, id = Rarity.id++) {
 		this.name = name;
 		this.color = color;
 		this.probability = probability;
-		this.id = Rarity.id++;
+		this.id = id;
 		/**
 		 * The list of texts that a coupon of this rarity can have.
 		 * @private
@@ -35,7 +35,7 @@ export default class Rarity {
 
 	/** @returns true if there are now texts for coupons in this rarity */
 	isEmpty() {
-		return this.texts === [];
+		return !this.texts.length;
 	}
 
 	/** @param {String} text Add a text that will have a chance to be added to a new coupon of this rarity */

@@ -1,10 +1,14 @@
-import { useFonts } from 'expo-font';
+import * as Font from 'expo-font';
+
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 import fonts from '../config/fonts';
 import colors from '../config/colors';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useRef } from 'react';
 
 function AppText({
 	children,
@@ -14,7 +18,19 @@ function AppText({
 	...otherProps
 }) {
 	// Loading all the fonts
-	const [fontsLoaded] = useFonts(fonts.fontsDict);
+	const isMountedRef = useRef(null);
+	const [fontsLoaded, setFontLoaded] = useState(false);
+	const _loadFontsAsync = async () => {
+		await Font.loadAsync(fonts.fontsDict);
+		if (isMountedRef.current) {
+			setFontLoaded(true);
+		}
+	};
+	useEffect(() => {
+		isMountedRef.current = true;
+		_loadFontsAsync();
+		return () => (isMountedRef.current = false);
+	}, []);
 
 	return (
 		<Text

@@ -1,4 +1,4 @@
 export default {
-	pointsForCoupon: 20,
-	getPointsEvery: 20, //In seconds
+	pointsForCoupon: 60,
+	getPointsEvery: 14400, //In seconds
 };

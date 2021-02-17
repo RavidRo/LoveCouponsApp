@@ -53,7 +53,10 @@ function getCollection(collection) {
 		.collection(collection)
 		.get()
 		.then((querySnapshot) =>
-			querySnapshot.docs.map((snapshot) => snapshot.data())
+			querySnapshot.docs.map((snapshot) => ({
+				id: snapshot.id,
+				...snapshot.data(),
+			}))
 		)
 		.catch((error) => handleError('getCollection', error));
 }

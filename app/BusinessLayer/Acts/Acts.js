@@ -23,6 +23,6 @@ export default [
 	new Act('Coupon', 30, SendCouponActModal, true, 'gift'),
 	new Act('Video', 15, SendVideoActModal, true, 'video-image'),
 	new Act('Picture', 10, SendPhotoActModal, true, 'camera'),
-	new Act('Message', 5, SendMessageActModal, true, 'cellphone-message'),
-	new Act('❤', 2, sendHeartAct),
+	new Act('Message', 6, SendMessageActModal, true, 'cellphone-message'),
+	new Act('❤', 3, sendHeartAct),
 ];

@@ -8,13 +8,16 @@ import Screen from './app/components/Screen';
 import Loading from './app/components/Loading';
 import useInit from './app/Hooks/useInit';
 import OfflineNotice from './app/components/OfflineNotice';
+import AppButton from './app/components/AppButton';
+import colors from './app/config/colors';
+import { Button } from 'react-native';
 
 const drawerWidth = '80%';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
-	const loaded = useInit();
+	const [loaded, loading, reload] = useInit();
 	return loaded ? (
 		<>
 			<NavigationContainer>
@@ -30,7 +33,20 @@ export default function App() {
 		</>
 	) : (
 		<Screen style={{ alignItems: 'center', justifyContent: 'center' }}>
-			<Loading />
+			{loading ? (
+				<Loading />
+			) : (
+				<AppButton
+					onPress={reload}
+					title={'Reconnect'}
+					style={{
+						backgroundColor: colors.blue,
+						height: 45,
+						justifyContent: 'center',
+					}}
+					textStyle={{ fontSize: 28 }}
+				/>
+			)}
 		</Screen>
 	);
 }
