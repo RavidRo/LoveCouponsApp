@@ -10,7 +10,6 @@ import useInit from './app/Hooks/useInit';
 import OfflineNotice from './app/components/OfflineNotice';
 import AppButton from './app/components/AppButton';
 import colors from './app/config/colors';
-import { Button } from 'react-native';
 
 const drawerWidth = '80%';
 

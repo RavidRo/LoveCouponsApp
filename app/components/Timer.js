@@ -18,11 +18,15 @@ const borderColor = colors.medium_04;
 const timeObject = new Time();
 
 function getText(timeLeft) {
+	if (timeLeft === 0) {
+		return 'Ready!';
+	}
+
 	const hours = timeObject.getHours(timeLeft);
 	const minutes = timeObject.getMinutes(timeLeft);
 	const seconds = timeObject.getSeconds(timeLeft);
 	return `${hours ? `${hours}H` : ''} ${minutes ? `${minutes}M` : ''} ${
-		seconds ? `${seconds}S` : 'Ready!'
+		seconds ? `${seconds}S` : ''
 	}`;
 }
 
