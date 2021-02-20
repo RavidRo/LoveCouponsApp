@@ -8,29 +8,37 @@ import useInterval from './useInterval';
 export default function useTimer() {
 	// Time control logic:
 	const [timeLeft, setTimeLeft] = useState(settings.getPointsEvery); // 1) Set the initial time to 0
-	const loadTime = () => {
-		StateHandler.getLastTimeSent().then((time) => {
-			if (time) {
-				const timeSince = Math.round(
-					new Date().getTime() / 1000 - time.seconds
-				);
-				const timeLeft = Math.max(
-					settings.getPointsEvery - timeSince,
-					0
-				);
-				setTimeLeft(timeLeft);
-			} else {
-				setTimeLeft(0);
-			}
-		});
-	};
+	const [delay, setDelay] = useState(null);
 	useInterval(() => {
 		if (timeLeft > 0) {
 			setTimeLeft(timeLeft - 1);
 		}
-	}, 1000); // 2) Remove 1 second every second
-	// 3) Synchronize with database
+	}, delay);
+	const startTimer = () => setDelay(1000);
+	const stopTimer = () => setDelay(null);
+
+	const loadTime = () => {
+		console.log('Loading time');
+		StateHandler.getLastTimeSent().then((time) => {
+			stopTimer();
+			if (time) {
+				const timeSince = Math.round(
+					new Date().getTime() / 1000 - time.seconds
+				);
+				const _timeLeft = Math.max(
+					settings.getPointsEvery - timeSince,
+					0
+				);
+				setTimeLeft(_timeLeft);
+			} else {
+				setTimeLeft(0);
+			}
+			startTimer();
+		});
+	};
+
 	useEffect(() => {
+		startTimer();
 		loadTime();
 	}, []);
 
@@ -44,11 +52,10 @@ export default function useTimer() {
 			nextAppState === 'active'
 		) {
 			loadTime();
-			console.log('App has come to the foreground!');
 		}
 
 		appState.current = nextAppState;
-		console.log('AppState', appState.current);
+		// console.log('AppState', appState.current);
 	};
 	useEffect(() => {
 		AppState.addEventListener('change', _handleAppStateChange);

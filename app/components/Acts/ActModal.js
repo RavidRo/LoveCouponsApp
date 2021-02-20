@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 
 import colors from '../../config/colors';
 import AppButton from '../AppButton';
+import { StatusBar } from 'react-native';
 
 export default function ActModal({ children, cancel }) {
 	const hasChildren = Array.isArray(children)
 		? children.some((value) => value)
 		: children;
 	return (
-		hasChildren && (
-			<Modal animationType={'fade'} transparent>
+		<>
+			<StatusBar hidden={hasChildren} barStyle={'dark-content'} />
+			<Modal animationType={'fade'} transparent visible={hasChildren}>
 				<View style={styles.container}>
 					{cancel && (
 						<View style={styles.buttonContainer}>
@@ -26,7 +28,7 @@ export default function ActModal({ children, cancel }) {
 					<View style={styles.childrenContainer}>{children}</View>
 				</View>
 			</Modal>
-		)
+		</>
 	);
 }
 const styles = StyleSheet.create({
