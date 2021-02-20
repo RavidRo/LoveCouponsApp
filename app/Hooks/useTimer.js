@@ -22,7 +22,7 @@ export default function useTimer() {
 			stopTimer();
 			if (time) {
 				const timeSince = Math.round(
-					new Date().getTime() / 1000 - time.seconds
+					new Date().getTime() / 1000 - time
 				);
 				const _timeLeft = Math.max(
 					settings.getPointsEvery - timeSince,
@@ -51,6 +51,7 @@ export default function useTimer() {
 			nextAppState === 'active'
 		) {
 			loadTime();
+			// setTimeLeft(500);
 		}
 
 		appState.current = nextAppState;

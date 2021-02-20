@@ -5,7 +5,7 @@ import { Firestore } from './Firebase/Firebase';
 const stateCollectionName = 'state';
 const stateDocumentId = 'state';
 const pointsField = 'points';
-const lastTimeSentField = 'timestamp';
+const lastTimeSentField = 'lastTimePointsAdded';
 
 // Caching
 let state = null;
@@ -71,18 +71,22 @@ async function getLastTimeSent() {
  * @async
  * @param {Number} addBy The number of points the user gained. The value may be negative.
  */
-async function addPoints(addBy) {
+async function addPoints(addBy, saveTime = true) {
 	await loadState();
 
 	const newPointsValue = state[pointsField] + addBy;
+	const seconds = saveTime
+		? new Date().getTime() / 1000
+		: state[lastTimeSentField];
 
 	// Update locally
 	state[pointsField] = newPointsValue;
-	state[lastTimeSentField] = new Date().getTime();
+	state[lastTimeSentField] = seconds;
 
 	// Update remotely
 	return Firestore.updateDocument(stateCollectionName, stateDocumentId, {
 		[pointsField]: newPointsValue,
+		[lastTimeSentField]: seconds,
 	});
 }
 
@@ -95,7 +99,7 @@ async function addPoints(addBy) {
  *
  */
 async function removePoints(removeBy) {
-	addPoints(-1 * removeBy);
+	addPoints(-1 * removeBy, false);
 }
 
 export default {

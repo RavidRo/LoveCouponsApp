@@ -8,7 +8,11 @@ import AppText from './AppText';
 export default function DisplayCoupon({ coupon, style, textStyle }) {
 	return (
 		<View style={[styles.container, style]}>
-			<AppText style={{ ...styles.text, ...textStyle }} numberOfLines={6}>
+			<AppText
+				weight={'medium'}
+				style={{ ...styles.text, ...textStyle }}
+				numberOfLines={6}
+			>
 				{coupon.text}
 			</AppText>
 			<DisplayCouponSVG
@@ -22,11 +26,12 @@ export default function DisplayCoupon({ coupon, style, textStyle }) {
 const styles = StyleSheet.create({
 	text: {
 		position: 'absolute',
-		fontSize: 25,
-		top: '8.5%',
+		fontSize: 28,
+		// top: '25%',
 		zIndex: 1,
 	},
 	container: {
+		justifyContent: 'center',
 		transform: [
 			{
 				scale: 0.65,
