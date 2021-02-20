@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
 	},
 	couponText: {
 		left: '38%',
-		width: '52%',
+		width: '67%',
 	},
 	couponModalText: {
 		left: '35%',

@@ -17,9 +17,9 @@ export default function DrawerButton({ onPress }) {
 
 const styles = StyleSheet.create({
 	drawerButton: {
-		marginLeft: '12%',
-		marginTop: '22%',
-		alignSelf: 'flex-start',
+		// marginLeft: '12%',
+		marginTop: '27%',
+		// alignSelf: 'flex-start',
 		elevation: 16,
 	},
 });

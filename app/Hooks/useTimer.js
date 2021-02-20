@@ -18,7 +18,6 @@ export default function useTimer() {
 	const stopTimer = () => setDelay(null);
 
 	const loadTime = () => {
-		console.log('Loading time');
 		StateHandler.getLastTimeSent().then((time) => {
 			stopTimer();
 			if (time) {

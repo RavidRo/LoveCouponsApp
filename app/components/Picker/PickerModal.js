@@ -39,7 +39,7 @@ export default function PickerModal({
 					data={data}
 					keyExtractor={(_, index) => index.toString()}
 					numColumns={numberOfColumns}
-					renderItem={({ item }) => (
+					renderItem={({ item, index }) => (
 						<PickerItemComponent
 							{...item}
 							onPress={
@@ -49,7 +49,11 @@ export default function PickerModal({
 									onSelectItem(item);
 								})
 							}
-							width={`${100 / numberOfColumns}%`}
+							width={`${
+								index !== data.length - 1
+									? 100 / numberOfColumns
+									: 100
+							}%`}
 						/>
 					)}
 				/>

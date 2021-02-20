@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	couponContainer: {
-		marginTop: '32%',
+		marginTop: '25%',
 		flex: 0.65,
 	},
 	pickerBtnContainer: {
